@@ -3,21 +3,30 @@ from selenium import webdriver
 import page
 from selenium.webdriver.chrome.options import Options
 import time 
-chrome_options = Options()
 
 class StandardUser(unittest.TestCase):
     def setUp(self):
-        self.driver = webdriver.Chrome()
+        
+        options = webdriver.ChromeOptions()
+        
+        # options.add_argument('--window-size=1420,1080')
+        #options.add_argument('--disable-gpu')
+        self.driver = webdriver.Chrome(options=options)
+        # self.driver.implicitly_wait(3)
+        self.driver.maximize_window()
         self.driver.get("https://www.saucedemo.com")
 
 
     def test_login(self):
-        print ('test')
+        mainPage = page.LoginPage(self.driver)
+        mainPage.set_credentials('standard_user','secret_sauce')
+       # mainPage.username_element = 'standard_user'
+        mainPage.click_login_button()
         assert True
 
 
     def tearDown(self):
-        time.sleep(5)
+        time.sleep(2)
         self.driver.close()
 
 
