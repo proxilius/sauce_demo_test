@@ -24,28 +24,28 @@ class Element:
     def set_value(self, value):
         driver = self.driver
         locator = self.locator
-        WebDriverWait(driver, 100).until(lambda driver: driver.find_element(*locator))
+        WebDriverWait(driver, 10).until(lambda driver: driver.find_element(*locator))
         driver.find_element(*locator).clear()
         driver.find_element(*locator).send_keys(value)
 
     def get_value(self):
         driver = self.driver
         locator = self.locator
-        WebDriverWait(driver, 100).until(lambda driver: driver.find_element(*locator))
+        WebDriverWait(driver, 10).until(lambda driver: driver.find_element(*locator))
         element = driver.find_element(*locator)
         return element.get_attribute("value")
 
     def click(self):
         driver = self.driver
         locator = self.locator
-        WebDriverWait(driver, 100).until(lambda driver: driver.find_element(*locator))
+        WebDriverWait(driver, 10).until(lambda driver: driver.find_element(*locator))
         element = driver.find_element(*locator)
         element.click()
 
     def get_instances(self):
         driver = self.driver
         locator = self.locator
-        WebDriverWait(driver, 100).until(lambda driver: driver.find_element(*locator))
+        WebDriverWait(driver, 10).until(lambda driver: driver.find_element(*locator))
         elements = driver.find_elements(*locator)
         return elements
 
@@ -62,6 +62,10 @@ class LoginPage(BasePage):
     def click_login_button(self):
         element = self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON)
         element.click()
+
+    def login(self, username, password):
+        self.set_credentials(username, password)
+        self.click_login_button()
 
     def seek_error(self):
         try:
