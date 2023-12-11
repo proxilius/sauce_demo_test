@@ -1,0 +1,52 @@
+2023-12-10 16:44:04,714 - INFO - Cart is empty PASSED
+2023-12-10 16:44:06,170 - INFO - Cart has 6 elements PASSED
+2023-12-10 16:44:25,479 - INFO - Login PASSED
+2023-12-10 16:44:30,889 - INFO - Login PASSED
+2023-12-10 19:05:34,003 - ERROR - Error terminating service process.
+Traceback (most recent call last):
+  File "C:\Users\gnorb\AppData\Local\Programs\Python\Python39\lib\site-packages\selenium\webdriver\common\service.py", line 170, in _terminate_process
+    self.process.terminate()
+  File "C:\Users\gnorb\AppData\Local\Programs\Python\Python39\lib\subprocess.py", line 1551, in terminate
+    _winapi.TerminateProcess(self._handle, 1)
+OSError: [WinError 6] A leíró érvénytelen
+2023-12-10 19:13:18,243 - INFO - Cart is empty PASSED
+2023-12-10 19:13:19,703 - INFO - Cart has 6 elements PASSED
+2023-12-10 19:13:26,148 - INFO - Cart is empty PASSED
+2023-12-10 19:13:27,591 - INFO - Cart has 6 elements PASSED
+2023-12-10 19:15:52,416 - INFO - Cart is empty PASSED
+2023-12-10 19:15:53,865 - INFO - Cart has 6 elements PASSED
+2023-12-10 19:16:05,049 - INFO - Cart is empty PASSED
+2023-12-10 19:16:06,510 - INFO - Cart has 6 elements PASSED
+2023-12-11 16:13:04,659 - INFO - Cart is empty PASSED
+2023-12-11 16:13:05,063 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 16:14:35,509 - INFO - Cart is empty PASSED
+2023-12-11 16:14:35,892 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 16:14:47,340 - INFO - Cart is empty PASSED
+2023-12-11 16:14:47,715 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 16:31:43,888 - INFO - Cart is empty PASSED
+2023-12-11 16:31:44,280 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 16:33:34,944 - INFO - Cart is empty PASSED
+2023-12-11 16:33:35,505 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 16:40:15,807 - INFO - Cart is empty PASSED
+2023-12-11 16:40:16,371 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 16:40:16,710 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 16:41:16,309 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 16:42:20,013 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 16:42:55,055 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 17:06:38,149 - INFO - Cart is empty PASSED
+2023-12-11 17:06:38,713 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 17:08:03,817 - INFO - Cart is empty PASSED
+2023-12-11 17:08:04,380 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 17:08:04,672 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 17:09:23,560 - INFO - Cart is empty PASSED
+2023-12-11 17:09:24,133 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 17:09:24,460 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 17:11:30,218 - INFO - Cart is empty PASSED
+2023-12-11 17:11:30,783 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 17:11:31,090 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 17:12:45,359 - INFO - Cart is empty PASSED
+2023-12-11 17:12:45,924 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 17:12:46,244 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 17:13:08,369 - INFO - Cart is empty PASSED
+2023-12-11 17:13:08,914 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 17:13:09,221 - INFO - Cart items are the same as items added previously PASSED

@@ -3,6 +3,7 @@ from element import BasePageElement
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
 import time
+from _base_page import BasePage
 
 # class UsernameElement(BasePageElement):
 #     locator=LoginPageLocators.USERNAME
@@ -11,9 +12,9 @@ import time
 #     locator=LoginPageLocators.PASSOWRD
 
 
-class BasePage(object):
-    def __init__(self, driver):
-        self.driver = driver
+# class BasePage(object):
+#     def __init__(self, driver):
+#         self.driver = driver
 
 
 class Element:
@@ -52,16 +53,11 @@ class Element:
 
 class LoginPage(BasePage):
     def set_credentials(self, username, password):
-        username_element = Element(self.driver, LoginPageLocators.USERNAME)
-        password_element = Element(self.driver, LoginPageLocators.PASSOWRD)
-
-        username_element.set_value(username)
-        password_element.set_value(password)
-        x = username_element.get_value()
+        self._type(LoginPageLocators.USERNAME, username)
+        self._type(LoginPageLocators.PASSOWRD, password)
 
     def click_login_button(self):
-        element = self.driver.find_element(*LoginPageLocators.LOGIN_BUTTON)
-        element.click()
+        self._click(LoginPageLocators.LOGIN_BUTTON)
 
     def login(self, username, password):
         self.set_credentials(username, password)
@@ -78,13 +74,38 @@ class LoginPage(BasePage):
 
 class InventoryPage(BasePage):
     def add_to_cart_all(self):
-        # buttons = self.driver.find_elements(*InventoryPageLocators.ADD_TO_CART_BUTTON)
-        buttonsElement = Element(self.driver, InventoryPageLocators.ADD_TO_CART_BUTTON)
-        buttons = buttonsElement.get_instances()
-        for x in buttons:
-            time.sleep(0.2)
-            x.click()
-        return len(buttons)
+        items = []
+        item_elements = self._find_all(InventoryPageLocators.INVENTORY_ITEM)
+        for i in item_elements:
+            item_in_cart = False
+            cart_button_text = self._find_child(
+                i, InventoryPageLocators.ADD_TO_CART_BUTTON
+            ).text
+            if "remove" in cart_button_text.lower():
+                item_in_cart = True
+            else:
+                button = self._find_child(i, InventoryPageLocators.ADD_TO_CART_BUTTON)
+                button.click()
+                items.append(
+                    {
+                        "name": self._find_child(
+                            i, InventoryPageLocators.ITEM_NAME
+                        ).text,
+                        "description": self._find_child(
+                            i, InventoryPageLocators.ITEM_DESCRIPTION
+                        ).text,
+                        "price": float(
+                            self._find_child(i, InventoryPageLocators.ITEM_PRICE).text[
+                                1:
+                            ]
+                        ),
+                    }
+                )
+
+        return {"count": len(item_elements), "item_names": items}
+
+    def click_shopping_cart(self):
+        self._click(InventoryPageLocators.SHOPPING_CART_LINK)
 
     def get_cart_quantity(self):
         try:
@@ -97,10 +118,70 @@ class InventoryPage(BasePage):
 
     def set_sort(self, value):
         try:
-            select_element = Select(
-                self.driver.find_element(*InventoryPageLocators.SELECT_SORT)
-            )
+            select_element = Select(self._find(InventoryPageLocators.SELECT_SORT))
+            print("FOUND ELEMENT::::::", select_element)
             select_element.select_by_value(value)
             time.sleep(1)
         except:
             return 0
+
+    def get_items_all(self):
+        items = []
+        item_elements = self._find_all(InventoryPageLocators.INVENTORY_ITEM)
+        for i in item_elements:
+            item_in_cart = False
+            cart_button_text = self._find_child(
+                i, InventoryPageLocators.ADD_TO_CART_BUTTON
+            ).text
+            if "remove" in cart_button_text.lower():
+                item_in_cart = True
+            items.append(
+                {
+                    "name": self._find_child(i, InventoryPageLocators.ITEM_NAME).text,
+                    "description": self._find_child(
+                        i, InventoryPageLocators.ITEM_DESCRIPTION
+                    ).text,
+                    "price": float(
+                        self._find_child(i, InventoryPageLocators.ITEM_PRICE).text[1:]
+                    ),
+                    "in_cart": item_in_cart,
+                }
+            )
+
+        return items
+
+
+class CartPage(BasePage):
+    def get_cart_items_all(self):
+        items = []
+        item_elements = self._find_all(CartPageLocators.CART_ITEM)
+        for i in item_elements:
+            items.append(
+                {
+                    "name": self._find_child(i, CartPageLocators.ITEM_NAME).text,
+                    "description": self._find_child(
+                        i, CartPageLocators.ITEM_DESCRIPTION
+                    ).text,
+                    "price": float(
+                        self._find_child(i, CartPageLocators.ITEM_PRICE).text[1:]
+                    ),
+                }
+            )
+        return items
+
+    def click_checkout(self):
+        return self._click(CartPageLocators.CHECKOUT_BUTTON)
+
+
+class CheckoutPage(BasePage):
+    def set_firstname(self, value):
+        self._type(CheckoutPageLocators.FIRST_NAME_INPUT, value)
+
+    def set_last_name(self, value):
+        self._type(CheckoutPageLocators.LAST_NAME_INPUT, value)
+
+    def set_zip(self, value):
+        self._type(CheckoutPageLocators.POSTAL_CODE_INPUT, value)
+
+    def click_continue(self):
+        return self._click(CheckoutPageLocators.CONTINUE_BUTTON)
