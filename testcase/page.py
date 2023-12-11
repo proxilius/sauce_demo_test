@@ -85,7 +85,8 @@ class InventoryPage(BasePage):
                 item_in_cart = True
             else:
                 button = self._find_child(i, InventoryPageLocators.ADD_TO_CART_BUTTON)
-                button.click()
+                if item_in_cart == False:
+                    button.click()
                 items.append(
                     {
                         "name": self._find_child(
@@ -99,6 +100,7 @@ class InventoryPage(BasePage):
                                 1:
                             ]
                         ),
+                        "in_cart": item_in_cart,
                     }
                 )
 
@@ -185,3 +187,37 @@ class CheckoutPage(BasePage):
 
     def click_continue(self):
         return self._click(CheckoutPageLocators.CONTINUE_BUTTON)
+
+
+class CheckoutStepTwoPage(BasePage):
+    def click_finish(self):
+        return self._click(CheckoutPageStepTwoLocators.FINISH_BUTTON)
+
+    def get_items(self):
+        items = []
+        item_elements = self._find_all(CheckoutPageStepTwoLocators.CART_ITEM)
+        for i in item_elements:
+            items.append(
+                {
+                    "name": self._find_child(
+                        i, CheckoutPageStepTwoLocators.ITEM_NAME
+                    ).text,
+                    "description": self._find_child(
+                        i, CheckoutPageStepTwoLocators.ITEM_DESCRIPTION
+                    ).text,
+                    "price": float(
+                        self._find_child(
+                            i, CheckoutPageStepTwoLocators.ITEM_PRICE
+                        ).text[1:]
+                    ),
+                }
+            )
+
+        return items
+
+    def check_price(self, final_price):
+        total_price = float(
+            self._find(CheckoutPageStepTwoLocators.TOTAL_PRICE_LABEL).text.split("$")[1]
+        )
+        print(total_price, final_price)
+        return total_price == final_price

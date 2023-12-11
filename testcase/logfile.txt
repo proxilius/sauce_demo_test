@@ -50,3 +50,28 @@ OSError: [WinError 6] A leíró érvénytelen
 2023-12-11 17:13:08,369 - INFO - Cart is empty PASSED
 2023-12-11 17:13:08,914 - ERROR - Cart has 6 elements FAILED: 
 2023-12-11 17:13:09,221 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 18:29:03,468 - INFO - Cart is empty PASSED
+2023-12-11 18:29:04,039 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 18:29:04,348 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 18:30:21,628 - INFO - Cart is empty PASSED
+2023-12-11 18:30:22,189 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 18:30:22,505 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 18:41:57,771 - INFO - Cart is empty PASSED
+2023-12-11 18:41:58,311 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 18:41:58,631 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 18:42:59,895 - INFO - Cart is empty PASSED
+2023-12-11 18:43:00,450 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 18:43:00,747 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 18:44:25,457 - INFO - Cart is empty PASSED
+2023-12-11 18:44:26,003 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 18:44:26,307 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 18:45:41,661 - INFO - Cart is empty PASSED
+2023-12-11 18:45:42,219 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 18:45:42,520 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 18:46:48,703 - INFO - Cart is empty PASSED
+2023-12-11 18:46:49,252 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 18:46:49,559 - INFO - Cart items are the same as items added previously PASSED
+2023-12-11 18:55:36,209 - INFO - Cart is empty PASSED
+2023-12-11 18:55:36,789 - ERROR - Cart has 6 elements FAILED: 
+2023-12-11 18:55:37,100 - ERROR - Cart items are the same as items added previously FAILED: 
+2023-12-11 18:55:39,692 - INFO - Total price is equal:  PASSED

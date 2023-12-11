@@ -231,12 +231,21 @@ class CheckoutTests(unittest.TestCase):
         added_to_cart = CommonSteps().add_everything_to_cart(self)
         CommonSteps.checkout(self, added_to_cart)
         checkoutPage = page.CheckoutPage(self.driver)
+        checkoutPageStepTwo = page.CheckoutStepTwoPage(self.driver)
         checkoutPage.set_firstname("a")
         checkoutPage.set_last_name("b")
         checkoutPage.set_zip("c")
         time.sleep(1)
         checkoutPage.click_continue()
-        time.sleep(3)
+        time.sleep(1)
+        data = checkoutPageStepTwo.get_items()
+        final_price = sum(item["price"] for item in data)
+        price_equal = checkoutPageStepTwo.check_price(final_price)
+        assert_and_log(self, price_equal, "Total price is equal: ")
+        if price_equal:
+            checkoutPageStepTwo.click_finish()
+
+        time.sleep()
 
 
 if __name__ == "__main__":
