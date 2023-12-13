@@ -17,3 +17,7 @@ class CheckoutPage(BasePage):
 
     def click_continue(self):
         return self._click(CheckoutPageLocators.CONTINUE_BUTTON)
+
+    def error_message(self):
+        error = self._find(CheckoutPageLocators.ERROR_TEXT).text
+        return error

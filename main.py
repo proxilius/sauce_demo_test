@@ -13,6 +13,7 @@ from selenium.webdriver.chrome.options import Options
 import time
 import logging
 from ddt import ddt, data
+import os
 
 
 logging.basicConfig(
@@ -215,6 +216,42 @@ class CartTests(unittest.TestCase):
             self.check_sort(counter, items)
             counter = counter + 1
 
+    @data("standard_user")
+    def test_add_to_cart_some_element(self, username):
+        inventoryPage = InventoryPage(self.driver)
+        CommonSteps.login(self, username)
+        items = inventoryPage.get_items_all()
+
+        to_be_added = [items[0]["name"], items[1]["name"]]
+        print("TO BE ADDED:: ", to_be_added)
+        for item_name in to_be_added:
+            inventoryPage.add_item_to_cart_by_name(item_name)
+        items_in_cart = [
+            item["name"]
+            for item in inventoryPage.get_items_all()
+            if item["in_cart"] == True
+        ]
+        print("ITEMS:INCART ", items_in_cart)
+        assert items_in_cart == to_be_added
+        time.sleep(1)
+        inventoryPage.remove_item_by_name(to_be_added[0])
+        items_in_cart = [
+            item["name"]
+            for item in inventoryPage.get_items_all()
+            if item["in_cart"] == True
+        ]
+        print("TO BE ADDED:: ", to_be_added[1])
+        print("ITEMS:INCART ", items_in_cart)
+        project_folder = os.getcwd()
+
+        # Define the relative path to the desired folder
+        relative_folder_path = "screenshots"
+
+        # Build the full path to the folder within the project
+        folder_path = os.path.join(project_folder, relative_folder_path)
+        self.driver.save_screenshot(folder_path + "/image.png")
+        assert items_in_cart == [to_be_added[1]]
+
 
 @ddt
 class CheckoutTests(unittest.TestCase):
@@ -236,8 +273,26 @@ class CheckoutTests(unittest.TestCase):
         CommonSteps.checkout(self, added_to_cart)
         checkoutPage = CheckoutPage(self.driver)
         checkoutPageStepTwo = CheckoutStepTwoPage(self.driver)
+        checkoutPage.click_continue()
+        assert_and_log(
+            self,
+            checkoutPage.error_message() == ERROR_MSG_MISSING_FIRST_NAME,
+            "First name is required",
+        )
         checkoutPage.set_firstname("a")
+        checkoutPage.click_continue()
+        assert_and_log(
+            self,
+            checkoutPage.error_message() == ERROR_MSG_MISSING_LAST_NAME,
+            "First name is required",
+        )
         checkoutPage.set_last_name("b")
+        checkoutPage.click_continue()
+        assert_and_log(
+            self,
+            checkoutPage.error_message() == ERROR_MSG_MISSING_ZIP,
+            "ZIP is required",
+        )
         checkoutPage.set_zip("c")
         time.sleep(1)
         checkoutPage.click_continue()
@@ -249,7 +304,7 @@ class CheckoutTests(unittest.TestCase):
         if price_equal:
             checkoutPageStepTwo.click_finish()
 
-        time.sleep()
+        time.sleep(1)
 
 
 if __name__ == "__main__":

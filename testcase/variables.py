@@ -7,3 +7,6 @@ CURRENT_USER = USERS[0]
 ERROR_MSG_WRONG_PASSWORD = (
     "Epic sadface: Username and password do not match any user in this service"
 )
+ERROR_MSG_MISSING_FIRST_NAME = "Error: First Name is required"
+ERROR_MSG_MISSING_LAST_NAME = "Error: Last Name is required"
+ERROR_MSG_MISSING_ZIP = "Error: Postal Code is required"

@@ -39,6 +39,34 @@ class InventoryPage(BasePage):
 
         return {"count": len(item_elements), "item_names": items}
 
+    def inventory_item(self, name):
+        item_elements = self._find_all(InventoryPageLocators.INVENTORY_ITEM)
+        for i in item_elements:
+            if self._find_child(i, InventoryPageLocators.ITEM_NAME).text == name:
+                return i
+
+        return False
+
+    def add_item_to_cart_by_name(self, name):
+        item = self.inventory_item(name)
+        assert item, f"Cannot add item '{name}' to cart, item not found"
+        if (
+            "remove"
+            not in self._find_child(item, InventoryPageLocators.ADD_TO_CART_BUTTON).text
+        ):
+            self._find_child(item, InventoryPageLocators.ADD_TO_CART_BUTTON).click()
+
+    def remove_item_by_name(self, name):
+        item = self.inventory_item(name)
+        assert item, f"Cannot remove item '{name}' from cart, item not found"
+        if (
+            "remove"
+            in self._find_child(
+                item, InventoryPageLocators.ADD_TO_CART_BUTTON
+            ).text.lower()
+        ):
+            self._find_child(item, InventoryPageLocators.ADD_TO_CART_BUTTON).click()
+
     def click_shopping_cart(self):
         self._click(InventoryPageLocators.SHOPPING_CART_LINK)
 
