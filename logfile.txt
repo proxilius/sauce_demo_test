@@ -45,3 +45,12 @@
 2023-12-10 09:49:39,985 - INFO - Performed an action successfully
 2023-12-10 09:49:45,704 - INFO - Login PASSED
 2023-12-10 09:49:45,704 - INFO - Performed an action successfully
+2023-12-12 18:37:59,386 - ERROR - Login FAILED: 
+2023-12-12 18:38:05,160 - INFO - Login PASSED
+2023-12-13 16:55:54,921 - ERROR - Login FAILED: 
+2023-12-13 16:56:00,432 - INFO - Login PASSED
+2023-12-13 16:56:18,446 - INFO - Cart is empty PASSED
+2023-12-13 16:56:18,963 - ERROR - Cart has 6 elements FAILED: 
+2023-12-13 16:56:25,484 - INFO - Cart is empty PASSED
+2023-12-13 16:56:26,028 - ERROR - Cart has 6 elements FAILED: 
+2023-12-13 16:56:26,316 - ERROR - Cart items are the same as items added previously FAILED: 

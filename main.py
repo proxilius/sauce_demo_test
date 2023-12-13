@@ -1,13 +1,17 @@
+import pytest
+
+# from pages.page import InventoryPage, CartPage, CheckoutPage, CheckoutStepTwoPage
+from pages.login_page import LoginPage
+from pages.inventory_page import InventoryPage
+from pages.cart_page import CartPage
+from pages.checkout_page import CheckoutPage
+from pages.checkout_step_two_page import CheckoutStepTwoPage
 import unittest
-from variables import *
+from testcase.variables import *
 from selenium import webdriver
-import page
 from selenium.webdriver.chrome.options import Options
 import time
-import pytest
 import logging
-import sys
-import argparse
 from ddt import ddt, data
 
 
@@ -21,7 +25,7 @@ logging.basicConfig(
 class CommonSteps:
     @staticmethod
     def login(self, username):
-        loginPage = page.LoginPage(self.driver)
+        loginPage = LoginPage(self.driver)
         loginPage.login(username, PASSWORD)
         time.sleep(1)
         if self.driver.current_url == INVENTORY_URL:
@@ -29,7 +33,7 @@ class CommonSteps:
 
     @staticmethod
     def add_everything_to_cart(self):
-        inventoryPage = page.InventoryPage(self.driver)
+        inventoryPage = InventoryPage(self.driver)
         x = inventoryPage.get_cart_quantity()
         # assert x == 0
         assert_and_log(self, x == 0, "Cart is empty")
@@ -42,8 +46,8 @@ class CommonSteps:
 
     @staticmethod
     def checkout(self, items_added_to_cart):
-        inventoryPage = page.InventoryPage(self.driver)
-        cartPage = page.CartPage(self.driver)
+        inventoryPage = InventoryPage(self.driver)
+        cartPage = CartPage(self.driver)
         items_added_to_cart = items_added_to_cart
         inventoryPage.click_shopping_cart()
         items_in_cart = cartPage.get_cart_items_all()
@@ -94,12 +98,12 @@ class LogintTests(unittest.TestCase):
         self.driver.close()
 
     def test_login_valid(self):
-        loginPage = page.LoginPage(self.driver)
+        loginPage = LoginPage(self.driver)
         loginPage.login(STANDARD_USER, PASSWORD)
         assert_and_log(self, self.driver.current_url == INVENTORY_URL, "Login")
 
     def test_login_invalid(self):
-        loginPage = page.LoginPage(self.driver)
+        loginPage = LoginPage(self.driver)
         loginPage.login(STANDARD_USER, "invalid_pw")
         error_msg = loginPage.seek_error()
         assert_and_log(self, error_msg == ERROR_MSG_WRONG_PASSWORD, "Login")
@@ -124,14 +128,14 @@ class CartTests(unittest.TestCase):
         self.driver.close()
 
     def login(self, username):
-        loginPage = page.LoginPage(self.driver)
+        loginPage = LoginPage(self.driver)
         loginPage.login(username, PASSWORD)
         time.sleep(1)
         if self.driver.current_url == INVENTORY_URL:
             return True
 
     def add_everything_to_cart(self):
-        inventoryPage = page.InventoryPage(self.driver)
+        inventoryPage = InventoryPage(self.driver)
         x = inventoryPage.get_cart_quantity()
         # assert x == 0
         assert_and_log(self, x == 0, "Cart is empty")
@@ -152,8 +156,8 @@ class CartTests(unittest.TestCase):
 
     @data("standard_user")
     def test_checkout(self, username):
-        inventoryPage = page.InventoryPage(self.driver)
-        cartPage = page.CartPage(self.driver)
+        inventoryPage = InventoryPage(self.driver)
+        cartPage = CartPage(self.driver)
         if not self.login(
             username
         ):  # check if login is successfull, otherwise end test
@@ -197,9 +201,9 @@ class CartTests(unittest.TestCase):
             return
 
     def test_sort(self):
-        loginPage = page.LoginPage(self.driver)
+        loginPage = LoginPage(self.driver)
         loginPage.login(CURRENT_USER, "secret_sauce")
-        inventoryPage = page.InventoryPage(self.driver)
+        inventoryPage = InventoryPage(self.driver)
         sort_values = ["hilo", "lohi", "az", "za"]
         counter = 0
         # items = inventoryPage.get_items_all()
@@ -230,8 +234,8 @@ class CheckoutTests(unittest.TestCase):
         CommonSteps().login(self, username)
         added_to_cart = CommonSteps().add_everything_to_cart(self)
         CommonSteps.checkout(self, added_to_cart)
-        checkoutPage = page.CheckoutPage(self.driver)
-        checkoutPageStepTwo = page.CheckoutStepTwoPage(self.driver)
+        checkoutPage = CheckoutPage(self.driver)
+        checkoutPageStepTwo = CheckoutStepTwoPage(self.driver)
         checkoutPage.set_firstname("a")
         checkoutPage.set_last_name("b")
         checkoutPage.set_zip("c")
