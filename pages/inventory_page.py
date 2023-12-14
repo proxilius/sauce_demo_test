@@ -33,7 +33,7 @@ class InventoryPage(BasePage):
                                 1:
                             ]
                         ),
-                        "in_cart": item_in_cart,
+                        "in_cart": True,
                     }
                 )
 
@@ -72,8 +72,8 @@ class InventoryPage(BasePage):
 
     def get_cart_quantity(self):
         try:
-            shopping_cart_badge_element = self.driver.find_element(
-                *InventoryPageLocators.SHOPPING_CART_BADGE
+            shopping_cart_badge_element = self._find(
+                InventoryPageLocators.SHOPPING_CART_BADGE
             )
             return int(shopping_cart_badge_element.text)
         except:

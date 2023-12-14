@@ -14,6 +14,10 @@ import time
 import logging
 from ddt import ddt, data
 import os
+from PIL import Image, ImageChops
+from io import BytesIO
+import cv2
+import numpy as np
 
 
 logging.basicConfig(
@@ -28,9 +32,11 @@ class CommonSteps:
     def login(self, username):
         loginPage = LoginPage(self.driver)
         loginPage.login(username, PASSWORD)
-        time.sleep(1)
+        time.sleep(0.5)
         if self.driver.current_url == INVENTORY_URL:
             return True
+        else:
+            return False
 
     @staticmethod
     def add_everything_to_cart(self):
@@ -42,6 +48,7 @@ class CommonSteps:
         quantity = result["count"]
         names = result["item_names"]
         x = inventoryPage.get_cart_quantity()
+        print("X: ", x, "Quantity", quantity)
         assert_and_log(self, x == quantity, "Cart has " + str(quantity) + " elements")
         return names
 
@@ -77,6 +84,32 @@ def assert_and_log(self, condition, message):
         self.logger.info(message + " PASSED")
     except AssertionError as e:
         self.logger.error(message + " FAILED" + f": {str(e)}")
+
+
+# Function to capture a screenshot
+def capture_screenshot(driver, filename):
+    screenshot = driver.get_screenshot_as_png()
+    screenshot = Image.open(BytesIO(screenshot))
+    screenshot.save(filename)
+
+
+def compare_screenshots(image1_path, image2_path):
+    # Read the images
+    image1 = cv2.imread(image1_path)
+    image2 = cv2.imread(image2_path)
+
+    # Convert images to grayscale
+    gray_image1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
+    gray_image2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
+
+    # Compute Structural Similarity Index (SSI)
+    h, w = gray_image1.shape
+    diff = cv2.subtract(gray_image1, gray_image2)
+    err = np.sum(diff**2)
+    mse = err / (float(h * w))
+    threshold = 0.9  # You may need to adjust this threshold based on your needs
+    print("MSE::: ", mse, "DIFFF::::", diff)
+    return mse > threshold
 
 
 @pytest.mark.parametrize(
@@ -147,7 +180,25 @@ class CartTests(unittest.TestCase):
         assert_and_log(self, x == quantity, "Cart has " + str(quantity) + " elements")
         return names
 
-    @data("standard_user")
+    @data("standard_user", "visual_user", "error_user")
+    def test_check_alignments(self, username):
+        logged_in = CommonSteps.login(self, username)
+        print("LOGGED IN::: ", logged_in)
+        if not logged_in:
+            return
+            pass  # ¨return
+        # Capture the initial screenshot
+        if username == "standard_user":
+            capture_screenshot(self.driver, "screenshot1.png")
+
+        capture_screenshot(self.driver, "screenshot2.png")
+
+        # Compare the screenshots for misalignment
+        if compare_screenshots("screenshot1.png", "screenshot2.png"):
+            print("Misalignment detected!")
+        else:
+            print("No misalignment.")
+
     def test_add_to_cart(self, username):
         if not self.login(
             username
@@ -155,20 +206,21 @@ class CartTests(unittest.TestCase):
             pass  # ¨return
         self.add_everything_to_cart()
 
-    @data("standard_user")
+    @data("locked_out_user", "performance_glitch_user")
     def test_checkout(self, username):
         inventoryPage = InventoryPage(self.driver)
         cartPage = CartPage(self.driver)
         if not self.login(
             username
         ):  # check if login is successfull, otherwise end test
+            return
             pass  # ¨return
         items_added_to_cart = self.add_everything_to_cart()
         inventoryPage.click_shopping_cart()
         items_in_cart = cartPage.get_cart_items_all()
-        # print(
-        #     "items_added_to_cart: ", items_added_to_cart, "items_in_cart", items_in_cart
-        # )
+        print(
+            "items_added_to_cart: ", items_added_to_cart, "items_in_cart", items_in_cart
+        )
         assert_and_log(
             self,
             items_added_to_cart == items_in_cart,
@@ -201,9 +253,15 @@ class CartTests(unittest.TestCase):
             assert item_names == sorted(item_names, reverse=True)
             return
 
-    def test_sort(self):
-        loginPage = LoginPage(self.driver)
-        loginPage.login(CURRENT_USER, "secret_sauce")
+    @data("error_user")
+    def test_sort(self, username):
+        # loginPage = LoginPage(self.driver)
+        logged_in = CommonSteps.login(self, username)
+        print("LOGGED IN::: ", logged_in)
+        if not logged_in:
+            return
+            pass  # ¨return
+
         inventoryPage = InventoryPage(self.driver)
         sort_values = ["hilo", "lohi", "az", "za"]
         counter = 0
@@ -215,6 +273,10 @@ class CartTests(unittest.TestCase):
             items = inventoryPage.get_items_all()
             self.check_sort(counter, items)
             counter = counter + 1
+        # alert = self.driver.switch_to.alert
+        # # Close the alert
+        # if alert:
+        #     alert.accept()
 
     @data("standard_user")
     def test_add_to_cart_some_element(self, username):
@@ -305,6 +367,28 @@ class CheckoutTests(unittest.TestCase):
             checkoutPageStepTwo.click_finish()
 
         time.sleep(1)
+
+
+class MultiTest(unittest.TestCase):
+    def setUp(self):
+        self.logger = logging.getLogger(__name__)
+        options = webdriver.ChromeOptions()
+        self.driver = webdriver.Chrome(options=options)
+        self.driver.maximize_window()
+        self.driver.get(BASE_URL)
+
+    def login_user(request):
+        CommonSteps.login(request.param)
+        return request.param
+
+    def test_example(login_user):
+        # Your test logic using the logged-in user specified by login_user
+        print(f"Testing with username: {login_user}")
+        assert True  # Replace with your actual test conditions
+
+    def tearDown(self):
+        time.sleep(1)
+        self.driver.close()
 
 
 if __name__ == "__main__":

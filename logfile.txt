@@ -84,3 +84,17 @@ OSError: [WinError 6] A leíró érvénytelen
 2023-12-13 17:41:04,540 - INFO - First name is required PASSED
 2023-12-13 17:41:04,648 - INFO - ZIP is required PASSED
 2023-12-13 17:41:07,061 - INFO - Total price is equal:  PASSED
+2023-12-14 16:38:34,021 - INFO - Cart is empty PASSED
+2023-12-14 16:38:34,585 - ERROR - Cart has 6 elements FAILED: 
+2023-12-14 16:38:34,896 - ERROR - Cart items are the same as items added previously FAILED: 
+2023-12-14 16:38:35,043 - INFO - First name is required PASSED
+2023-12-14 16:38:35,153 - INFO - First name is required PASSED
+2023-12-14 16:38:35,260 - INFO - ZIP is required PASSED
+2023-12-14 16:38:37,653 - INFO - Total price is equal:  PASSED
+2023-12-14 16:40:33,590 - INFO - Cart is empty PASSED
+2023-12-14 16:40:34,137 - INFO - Cart has 6 elements PASSED
+2023-12-14 16:40:34,457 - ERROR - Cart items are the same as items added previously FAILED: 
+2023-12-14 16:40:34,600 - INFO - First name is required PASSED
+2023-12-14 16:40:34,708 - INFO - First name is required PASSED
+2023-12-14 16:40:34,824 - INFO - ZIP is required PASSED
+2023-12-14 16:40:37,248 - INFO - Total price is equal:  PASSED
