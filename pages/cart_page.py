@@ -27,6 +27,9 @@ class CartPage(BasePage):
     def click_checkout(self):
         return self._click(CartPageLocators.CHECKOUT_BUTTON)
 
+    def click_continue_shopping(self):
+        return self._click(CartPageLocators.CONTINUE_SHOPPING_BUTTON)
+
     def cart_item(self, name):
         item_elements = self._find_all(CartPageLocators.CART_ITEM)
         for i in item_elements:

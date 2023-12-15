@@ -58,21 +58,5 @@ class BasePage:
     def _type(self, locator, input_text):
         self._find(locator).send_keys(input_text)
 
-    def _is_displayed(self, locator, timeout=0):
-        if timeout > 0:
-            try:
-                wait = WebDriverWait(self.driver, timeout)
-                wait.until(
-                    expected_conditions.visibility_of_element_located(
-                        (locator["by"], locator["value"])
-                    )
-                )
-            except TimeoutException:
-                return False
-            return True
-        else:
-            e = self._find(locator)
-            if e:
-                return e.is_displayed()
-            else:
-                return False
+    def _value(self, locator):
+        return self._find(locator).get_attribute("value")

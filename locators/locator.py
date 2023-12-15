@@ -1,6 +1,11 @@
 from selenium.webdriver.common.by import By
 
 
+class CommonLocators(object):
+    BURGER_BUTTON = {"by": By.ID, "value": "react-burger-menu-btn"}
+    LOGOUT_BUTTON = {"by": By.ID, "value": "logout_sidebar_link"}
+
+
 class LoginPageLocators(object):
     USERNAME = {"by": By.ID, "value": "user-name"}
     PASSOWRD = {"by": By.ID, "value": "password"}
@@ -32,6 +37,7 @@ class CartPageLocators(object):
     ITEM_DESCRIPTION = {"by": By.CLASS_NAME, "value": "inventory_item_desc"}
     ITEM_PRICE = {"by": By.CLASS_NAME, "value": "inventory_item_price"}
     CHECKOUT_BUTTON = {"by": By.ID, "value": "checkout"}
+    CONTINUE_SHOPPING_BUTTON = {"by": By.ID, "value": "continue-shopping"}
     CART_BUTTON = {"by": By.CLASS_NAME, "value": "cart_button"}
 
 
@@ -52,3 +58,8 @@ class CheckoutPageStepTwoLocators(object):
     ITEM_DESCRIPTION = {"by": By.CLASS_NAME, "value": "inventory_item_desc"}
     ITEM_PRICE = {"by": By.CLASS_NAME, "value": "inventory_item_price"}
     TOTAL_PRICE_LABEL = {"by": By.CLASS_NAME, "value": "summary_subtotal_label"}
+
+
+class CheckoutCompletePageLocators(object):
+    FINISH_BUTTON = {"by": By.ID, "value": "checkout_complete_container"}
+    BACK_TO_PRODUCTS_BUTTON = {"by": By.ID, "value": "back-to-products"}

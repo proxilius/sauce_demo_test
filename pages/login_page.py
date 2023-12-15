@@ -20,7 +20,10 @@ class LoginPage(BasePage):
         self.click_login_button()
 
     def login_error(self):
-        if self._find(LoginPageLocators.ERROR):
-            return self._find(LoginPageLocators.ERROR).text
-        else:
+        try:
+            login_error = self.driver.find_element(
+                By.XPATH, LoginPageLocators.ERROR["value"]
+            )
+            return login_error.text
+        except:
             return False

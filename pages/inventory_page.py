@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
 import time
 from pages.base_page import BasePage
+from testcase.variables import *
 
 
 class InventoryPage(BasePage):
@@ -82,9 +83,8 @@ class InventoryPage(BasePage):
     def set_sort(self, value):
         try:
             select_element = Select(self._find(InventoryPageLocators.SELECT_SORT))
-            print("FOUND ELEMENT::::::", select_element)
             select_element.select_by_value(value)
-            time.sleep(1)
+            time.sleep(0.5)
         except:
             return 0
 
@@ -112,3 +112,10 @@ class InventoryPage(BasePage):
             )
 
         return items
+
+    def logout(self):
+        self._find(CommonLocators.BURGER_BUTTON).click()
+        time.sleep(0.5)
+        self._find(CommonLocators.LOGOUT_BUTTON).click()
+        print("Curent: ", self.driver.current_url, "base: ", BASE_URL)
+        assert self.driver.current_url == BASE_URL
