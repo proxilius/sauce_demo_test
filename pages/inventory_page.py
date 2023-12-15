@@ -37,7 +37,7 @@ class InventoryPage(BasePage):
                     }
                 )
 
-        return {"count": len(item_elements), "item_names": items}
+        return {"count": len(item_elements), "items": items}
 
     def inventory_item(self, name):
         item_elements = self._find_all(InventoryPageLocators.INVENTORY_ITEM)
@@ -72,8 +72,8 @@ class InventoryPage(BasePage):
 
     def get_cart_quantity(self):
         try:
-            shopping_cart_badge_element = self._find(
-                InventoryPageLocators.SHOPPING_CART_BADGE
+            shopping_cart_badge_element = self.driver.find_element(
+                By.CLASS_NAME, InventoryPageLocators.SHOPPING_CART_BADGE["value"]
             )
             return int(shopping_cart_badge_element.text)
         except:

@@ -19,6 +19,7 @@ class CartPage(BasePage):
                     "price": float(
                         self._find_child(i, CartPageLocators.ITEM_PRICE).text[1:]
                     ),
+                    "in_cart": True,
                 }
             )
         return items

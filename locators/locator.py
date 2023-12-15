@@ -9,6 +9,7 @@ class LoginPageLocators(object):
         "by": By.XPATH,
         "value": "/html/body/div[1]/div/div[2]/div[1]/div/div/form/div[3]/h3",
     }
+    LOGIN_WRAPPER = {"by": By.CLASS_NAME, "value": "login_wrapper"}
 
 
 class InventoryPageLocators(object):

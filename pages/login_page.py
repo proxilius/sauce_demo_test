@@ -1,8 +1,13 @@
 from locators.locator import *
 from pages.base_page import BasePage
+from testcase.variables import BASE_URL
 
 
 class LoginPage(BasePage):
+    def access_login_page(self):
+        self.driver.get(BASE_URL)
+        assert self._find(LoginPageLocators.LOGIN_WRAPPER)
+
     def set_credentials(self, username, password):
         self._type(LoginPageLocators.USERNAME, username)
         self._type(LoginPageLocators.PASSOWRD, password)
@@ -14,10 +19,8 @@ class LoginPage(BasePage):
         self.set_credentials(username, password)
         self.click_login_button()
 
-    def seek_error(self):
-        try:
-            element = self.driver.find_element(*LoginPageLocators.ERROR)
-            print("ERRORRRR ELEMENT:::::: ", element)
-            return element.text
-        except:
-            return 0
+    def login_error(self):
+        if self._find(LoginPageLocators.ERROR):
+            return self._find(LoginPageLocators.ERROR).text
+        else:
+            return False
