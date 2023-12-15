@@ -201,3 +201,25 @@ OSError: [WinError 6] A leíró érvénytelen
 2023-12-15 09:44:46,824 - INFO - Cart has 6 elements PASSED
 2023-12-15 09:47:16,634 - INFO - Cart is empty PASSED
 2023-12-15 09:47:18,171 - INFO - Cart has 6 elements PASSED
+2023-12-15 09:54:11,194 - INFO - Cart is empty PASSED
+2023-12-15 09:54:12,733 - INFO - Cart has 6 elements PASSED
+2023-12-15 09:54:49,086 - INFO - Cart is empty PASSED
+2023-12-15 09:54:50,632 - INFO - Cart has 6 elements PASSED
+2023-12-15 09:56:25,162 - INFO - Cart is empty PASSED
+2023-12-15 09:56:26,688 - INFO - Cart has 6 elements PASSED
+2023-12-15 09:57:20,454 - INFO - Cart is empty PASSED
+2023-12-15 09:57:21,988 - INFO - Cart has 6 elements PASSED
+2023-12-15 09:57:45,654 - INFO - Cart is empty PASSED
+2023-12-15 09:57:47,227 - INFO - Cart has 6 elements PASSED
+2023-12-15 09:58:22,686 - INFO - Cart is empty PASSED
+2023-12-15 09:58:24,233 - INFO - Cart has 6 elements PASSED
+2023-12-15 10:00:33,842 - INFO - Cart is empty PASSED
+2023-12-15 10:00:35,370 - INFO - Cart has 6 elements PASSED
+2023-12-15 10:02:37,684 - INFO - Cart is empty PASSED
+2023-12-15 10:02:39,230 - INFO - Cart has 6 elements PASSED
+2023-12-15 10:04:00,896 - INFO - Cart is empty PASSED
+2023-12-15 10:04:02,452 - INFO - Cart has 6 elements PASSED
+2023-12-15 10:05:46,089 - INFO - Cart is empty PASSED
+2023-12-15 10:05:47,628 - INFO - Cart has 6 elements PASSED
+2023-12-15 10:06:11,957 - INFO - Cart is empty PASSED
+2023-12-15 10:06:13,468 - INFO - Cart has 6 elements PASSED

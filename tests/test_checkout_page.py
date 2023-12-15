@@ -13,7 +13,7 @@ from utils.common import assert_and_log
 
 
 @ddt
-class CheckoutTests(unittest.TestCase):
+class TestCheckoutPage(unittest.TestCase):
     def setUp(self):
         self.logger = logging.getLogger(__name__)
         options = webdriver.ChromeOptions()

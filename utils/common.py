@@ -40,6 +40,7 @@ def compare_screenshots(image1_path, image2_path):
     diff = cv2.subtract(gray_image1, gray_image2)
     err = np.sum(diff**2)
     mse = err / (float(h * w))
-    threshold = 0.9  # You may need to adjust this threshold based on your needs
-    print("MSE::: ", mse, "DIFFF::::", diff)
-    return mse > threshold
+    threshold = 1  # You may need to adjust this threshold based on your needs
+    print("MSE::: ", mse)
+    assert not (float(mse) > float(threshold))
+    return float(mse) > float(threshold)

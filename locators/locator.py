@@ -32,6 +32,7 @@ class CartPageLocators(object):
     ITEM_DESCRIPTION = {"by": By.CLASS_NAME, "value": "inventory_item_desc"}
     ITEM_PRICE = {"by": By.CLASS_NAME, "value": "inventory_item_price"}
     CHECKOUT_BUTTON = {"by": By.ID, "value": "checkout"}
+    CART_BUTTON = {"by": By.CLASS_NAME, "value": "cart_button"}
 
 
 class CheckoutPageLocators(object):

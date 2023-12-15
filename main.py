@@ -17,16 +17,16 @@ import os
 
 
 from utils.common import assert_and_log
-from tests.login_tests import LogintTests
-from tests.inventory_page_tests import InventoryTests
-from tests.checkout_page_tests import CheckoutTests
-from tests.cart_page_tests import CartPageTests
+from tests.test_login_page import TestLoginPage
+from tests.test_inventory_page import TestInventoryPage
+from tests.test_checkout_page import TestCheckoutPage
+from tests.test_cart_page import TestCartPage
 
 
-# test_suite = unittest.TestLoader().loadTestsFromTestCase(LogintTests)
-# test_suite.addTests(unittest.TestLoader().loadTestsFromTestCase(CartPageTests))
-# test_suite.addTests(unittest.TestLoader().loadTestsFromTestCase(InventoryTests))
-# test_suite.addTests(unittest.TestLoader().loadTestsFromTestCase(CheckoutTests))
+# test_suite = unittest.TestLoader().loadTestsFromTestCase(TestLoginPage)
+# test_suite.addTests(unittest.TestLoader().loadTestsFromTestCase(TestInventoryPage))
+# test_suite.addTests(unittest.TestLoader().loadTestsFromTestCase(TestCheckoutPage))
+# test_suite.addTests(unittest.TestLoader().loadTestsFromTestCase(TestCartPage))
 
 # unittest.TextTestRunner(verbosity=2).run(test_suite)
 

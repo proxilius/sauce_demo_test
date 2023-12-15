@@ -16,43 +16,24 @@ from utils.common import capture_screenshot, compare_screenshots
 
 
 @ddt
-class InventoryTests(unittest.TestCase):
+class TestInventoryPage(unittest.TestCase):
     def setUp(self):
         self.logger = logging.getLogger(__name__)
         options = webdriver.ChromeOptions()
         self.driver = webdriver.Chrome(options=options)
         self.driver.maximize_window()
+        loginPage = LoginPage(self.driver)
         self.driver.get(BASE_URL)
+        # loginPage.access_login_page()
+        # return loginPage
 
     def tearDown(self):
         time.sleep(1)
         self.driver.close()
 
-    def login(self, username):
-        loginPage = LoginPage(self.driver)
-        loginPage.login(username, PASSWORD)
-        time.sleep(1)
-        if self.driver.current_url == INVENTORY_URL:
-            return True
-
-    def add_everything_to_cart(self):
-        inventoryPage = InventoryPage(self.driver)
-        cart_quantity = inventoryPage.get_cart_quantity()
-        assert_and_log(self, cart_quantity == 0, "Cart is empty")
-        result = inventoryPage.add_to_cart_all()
-        quantity = result["count"]
-        names = result["item_names"]
-        cart_quantity = inventoryPage.get_cart_quantity()
-        assert_and_log(
-            self, cart_quantity == quantity, "Cart has " + str(quantity) + " elements"
-        )
-        assert cart_quantity == quantity
-        return names
-
-    @data("standard_user", "visual_user", "error_user")
+    @data("standard_user", "error_user", "visual_user", "problem_user")
     def test_check_alignments(self, username):
         logged_in = CommonSteps.login(self, username)
-        print("LOGGED IN::: ", logged_in)
         if not logged_in:
             return
             pass  # ¨return
@@ -68,12 +49,12 @@ class InventoryTests(unittest.TestCase):
         else:
             print("No misalignment.")
 
-    @data("standard_user")
+    # @data("standard_user")
     def test_add_to_cart(self, username):
         if not CommonSteps().login(self, username):
             return
             pass
-        self.add_everything_to_cart()
+        CommonSteps.add_everything_to_cart()
 
     def check_sort(self, counter, current_items):
         item_names = [i["name"] for i in current_items]
@@ -92,7 +73,7 @@ class InventoryTests(unittest.TestCase):
             assert item_names == sorted(item_names, reverse=True)
             return
 
-    @data("error_user")
+    # @data("error_user")
     def test_sort(self, username):
         # loginPage = LoginPage(self.driver)
         logged_in = CommonSteps.login(self, username)
@@ -117,7 +98,7 @@ class InventoryTests(unittest.TestCase):
         # if alert:
         #     alert.accept()
 
-    @data("standard_user")
+    # @data("standard_user")
     def test_add_to_cart_some_element(self, username):
         inventoryPage = InventoryPage(self.driver)
         CommonSteps.login(self, username)
