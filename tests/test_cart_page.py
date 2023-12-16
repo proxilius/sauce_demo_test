@@ -87,11 +87,12 @@ class TestCartPage:
             cartPage.click_checkout()
         else:
             if cartPage.click_checkout() == None:
-                assert_and_log(
-                    self,
-                    False,
-                    "Cart is empty, checkout should be disabled",
-                )
+                # assert_and_log(
+                #     self,
+                #     False,
+                #     "Cart is empty, checkout should be disabled",
+                # )
+                assert False
 
 
 if __name__ == "__main__":

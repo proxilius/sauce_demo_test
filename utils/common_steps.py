@@ -25,14 +25,16 @@ class CommonSteps:
         inventoryPage = InventoryPage(self.driver)
         x = inventoryPage.get_cart_quantity()
         # assert x == 0
-        assert_and_log(self, x == 0, "Cart is empty")
+        # assert_and_log(self, x == 0, "Cart is empty")
+        assert x == 0
         result = inventoryPage.add_to_cart_all()
         quantity = result["count"]
         items = result["items"]
         time.sleep(1)
         x = inventoryPage.get_cart_quantity()
         print("X: ", x, "Quantity", quantity)
-        assert_and_log(self, x == quantity, "Cart has " + str(quantity) + " elements")
+        # assert_and_log(self, x == quantity, "Cart has " + str(quantity) + " elements")
+        assert x == quantity
         try:
             assert x == quantity
             return items
@@ -50,17 +52,19 @@ class CommonSteps:
         # print(
         #     "items_added_to_cart: ", items_added_to_cart, "items_in_cart", items_in_cart
         # )
-        assert_and_log(
-            self,
-            items_added_to_cart == items_in_cart,
-            "Cart items are the same as items added previously",
-        )
+        # assert_and_log(
+        #     self,
+        #     items_added_to_cart == items_in_cart,
+        #     "Cart items are the same as items added previously",
+        # )
+        assert items_added_to_cart == items_in_cart
         if len(items_in_cart) > 0:
             cartPage.click_checkout()
         else:
             if cartPage.click_checkout() == None:
-                assert_and_log(
-                    self,
-                    False,
-                    "Cart is empty, checkout should be disabled",
-                )
+                # assert_and_log(
+                #     self,
+                #     False,
+                #     "Cart is empty, checkout should be disabled",
+                # )
+                assert False

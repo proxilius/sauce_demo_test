@@ -28,7 +28,9 @@ from tests.test_cart_page import TestCartPage
 # test_suite.addTests(unittest.TestLoader().loadTestsFromTestCase(TestCheckoutPage))
 # test_suite.addTests(unittest.TestLoader().loadTestsFromTestCase(TestCartPage))
 
+
 # unittest.TextTestRunner(verbosity=2).run(test_suite)
+
 
 if __name__ == "__main__":
     unittest.main()

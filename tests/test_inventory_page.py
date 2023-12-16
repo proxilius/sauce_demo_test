@@ -51,17 +51,28 @@ class TestInventoryPage:
     # @pytest.mark.parametrize("username", ["standard_user", "error_user", "visual_user"])
     def test_check_alignments(self, inventory_page):
         username = inventory_page[2]
+        project_folder = os.getcwd()
+        # base_screenshot_path = os.path.join(
+        #     project_folder, "./screenshots/base_screenshot.png"
+        # )
+        base_screenshot_path = "./screenshots/base_screenshot.png"
+        screenshot_to_compare_path = "./screenshots/screenshot_to_compare.png"
+        # screenshot_to_compare_path = os.path.join(
+        #     project_folder, "/screenshots/screenshot_to_compare.png"
+        # )
+        time.sleep(0.5)
         if username == "standard_user":
-            capture_screenshot(self.driver, "screenshot1.png")
+            capture_screenshot(self.driver, base_screenshot_path)
 
-        capture_screenshot(self.driver, "screenshot2.png")
+        capture_screenshot(self.driver, screenshot_to_compare_path)
 
-        # Compare the screenshots for misalignment
-        if compare_screenshots("screenshot1.png", "screenshot2.png"):
+        if compare_screenshots(base_screenshot_path, screenshot_to_compare_path):
             print("Misalignment detected!")
+            # assert_and_log(False, "Misalignment detected!")
             assert False
         else:
             print("No misalignment.")
+            # assert_and_log(True, "No misalignment.")
             assert True
 
     # @data("standard_user")
@@ -104,18 +115,18 @@ class TestInventoryPage:
         to_be_added = [items[0], items[1]]
         for item in to_be_added:
             if not item["in_cart"]:
-                inventory_page.add_item_to_cart_by_name(item["name"])
+                inventoryPage.add_item_to_cart_by_name(item["name"])
         items_in_cart = [
-            item for item in inventory_page.get_items_all() if item["in_cart"] == True
+            item for item in inventoryPage.get_items_all() if item["in_cart"] == True
         ]
 
         assert [item["name"] for item in items_in_cart] == [
             item["name"] for item in to_be_added
         ]
         time.sleep(1)
-        inventory_page.remove_item_by_name(to_be_added[0]["name"])
+        inventoryPage.remove_item_by_name(to_be_added[0]["name"])
         items_in_cart = [
-            item for item in inventory_page.get_items_all() if item["in_cart"] == True
+            item for item in inventoryPage.get_items_all() if item["in_cart"] == True
         ]
 
         assert [item["name"] for item in items_in_cart] == [to_be_added[1]["name"]]
@@ -123,7 +134,6 @@ class TestInventoryPage:
     # @data("standard_user")
     def test_logout(self, inventory_page):
         inventoryPage = inventory_page[1]
-        print("PAGEEEEEEEEEEEEEEEEEEEE", inventoryPage)
         if not inventoryPage:
             return
         inventoryPage.logout()

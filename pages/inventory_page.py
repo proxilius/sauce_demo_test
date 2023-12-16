@@ -4,6 +4,7 @@ from selenium.webdriver.support.ui import Select
 import time
 from pages.base_page import BasePage
 from testcase.variables import *
+from utils.common import assert_and_log
 
 
 class InventoryPage(BasePage):
@@ -117,5 +118,6 @@ class InventoryPage(BasePage):
         self._find(CommonLocators.BURGER_BUTTON).click()
         time.sleep(0.5)
         self._find(CommonLocators.LOGOUT_BUTTON).click()
-        print("Curent: ", self.driver.current_url, "base: ", BASE_URL)
+        # print("Curent: ", self.driver.current_url, "base: ", BASE_URL)
+        # assert_and_log(self, self.driver.current_url == BASE_URL, "Logging out")
         assert self.driver.current_url == BASE_URL

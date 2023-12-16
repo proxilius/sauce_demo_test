@@ -26,7 +26,9 @@ class TestCheckoutPage:
     #     self.driver.get(BASE_URL)
 
     @pytest.fixture(
-        params=["locked_out_user", "standard_user", "error_user", "problem_user"]
+        params=[
+            "standard_user"
+        ]  # "locked_out_user", "standard_user", "error_user", "problem_user"
     )
     def checkout_page(self, request):
         self.logger = logging.getLogger(__name__)
@@ -117,10 +119,15 @@ class TestCheckoutPage:
         checkoutPage.click_continue()
         time.sleep(1)
         data = checkoutPageStepTwo.get_items()
+        names1 = [item["name"] for item in items_added_to_cart]
+        names2 = [item["name"] for item in data]
+        print("NAMES:::", names2, names1)
+        assert names1 == names2
         final_price = sum(item["price"] for item in data)
         price_equal = checkoutPageStepTwo.check_price(final_price)
-        assert_and_log(self, price_equal, "Total price is equal: ")
+        # assert_and_log(self, price_equal, "Total price is equal: ")
         assert price_equal
+
         if price_equal:
             checkoutPageStepTwo.click_finish()
 

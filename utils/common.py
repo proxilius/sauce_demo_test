@@ -3,26 +3,43 @@ import cv2
 import numpy as np
 from PIL import Image, ImageChops
 from io import BytesIO
+import os
 
+project_folder = os.getcwd()
+
+# Define the relative path to the desired folder
+relative_folder_path = "log_files"
+
+# Build the full path to the folder within the project
+folder_path = os.path.join(project_folder, relative_folder_path)
 logging.basicConfig(
     filename="logfile.txt",
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
 )
 
+import logging
 
-def assert_and_log(self, condition, message):
+
+def assert_and_log(condition, message):
+    logging.basicConfig(
+        filename="logfile.txt",
+        level=logging.INFO,
+        format="%(asctime)s - %(levelname)s - %(message)s",
+    )
     try:
         assert condition
-        self.logger.info(message + " PASSED")
+        logging.info(message + " PASSED")
     except AssertionError as e:
-        self.logger.error(message + " FAILED" + f": {str(e)}")
+        logging.error(message + " FAILED" + f": {str(e)}")
+        raise AssertionError(f"Assertion failed: {message}")
 
 
 # Function to capture a screenshot
 def capture_screenshot(driver, filename):
     screenshot = driver.get_screenshot_as_png()
     screenshot = Image.open(BytesIO(screenshot))
+
     screenshot.save(filename)
 
 
@@ -42,5 +59,10 @@ def compare_screenshots(image1_path, image2_path):
     mse = err / (float(h * w))
     threshold = 1  # You may need to adjust this threshold based on your needs
     print("MSE::: ", mse)
-    assert not (float(mse) > float(threshold))
+    # assert not (float(mse) > float(threshold))
     return float(mse) > float(threshold)
+
+
+def log_assert(expected, actual):
+    print(f"\nEXPECTED:  ---{expected}---")
+    print(f"ACTUAL:    ---{ actual}---")
