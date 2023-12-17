@@ -40,7 +40,7 @@ class TestLoginPage:
 
     @pytest.mark.parametrize(
         "username",
-        ALL_USERS,
+        USERS_WITHOUT_LOCKED_OUT,
     )
     def test_login_valid(self, login_page, username):
         login_page.login(username, PASSWORD)
