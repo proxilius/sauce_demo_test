@@ -6,6 +6,9 @@ from pages.base_page import BasePage
 
 
 class CheckoutStepTwoPage(BasePage):
+    def page_loaded(self):
+        return bool(self._find(CheckoutPageStepTwoLocators.CHECKOUT_SUMMARY_CONTAINER))
+
     def click_finish(self):
         return self._click(CheckoutPageStepTwoLocators.FINISH_BUTTON)
 

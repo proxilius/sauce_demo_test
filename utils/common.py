@@ -69,8 +69,9 @@ def log_assert(expected, actual, message=""):
     print(f"\nEXPECTED:  |  {expected}  |")
     print(f"ACTUAL:      |  {actual}    |")
     try:
-        assert expected == actual
-        # pytest.assume(expected == actual)
-        print(f"Assertion passed: {message}")
+        # assert expected == actual
+        pytest.assume(expected == actual)
+        if expected == actual:
+            print(f"Assertion passed: {message}")
     except AssertionError as e:
         raise AssertionError(f"Assertion failed: {message}")

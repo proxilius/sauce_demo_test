@@ -4,7 +4,7 @@ from pages.inventory_page import InventoryPage
 from pages.cart_page import CartPage
 from pages.item_page import ItemPage
 import unittest
-from testcase.variables import *
+from variables import *
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time
@@ -28,9 +28,7 @@ class TestInventoryPage:
     #     # loginPage.access_login_page()
     #     # return loginPage
 
-    @pytest.fixture(
-        params=["standard_user", "error_user", "problem_user", "visual_user"]
-    )
+    @pytest.fixture(params=USERS_WITHOUT_LOCKED_OUT)
     def inventory_page(self, request):
         self.logger = logging.getLogger(__name__)
         options = webdriver.ChromeOptions()

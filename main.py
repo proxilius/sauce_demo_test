@@ -7,7 +7,7 @@ from pages.cart_page import CartPage
 from pages.checkout_page import CheckoutPage
 from pages.checkout_step_two_page import CheckoutStepTwoPage
 import unittest
-from testcase.variables import *
+from variables import *
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import time

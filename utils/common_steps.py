@@ -1,7 +1,7 @@
 import time
 
 import pytest
-from testcase.variables import *
+from variables import *
 from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
 from utils.common import assert_and_log, log_assert
@@ -23,25 +23,21 @@ class CommonSteps:
     @pytest.mark.xfail
     def add_everything_to_cart(self):
         inventoryPage = InventoryPage(self.driver)
-        x = inventoryPage.get_cart_quantity()
+        items_in_cart = inventoryPage.get_cart_quantity()
         # assert x == 0
         # assert_and_log(self, x == 0, "Cart is empty")
         # assert x == 0
-        log_assert(0, x)
+        log_assert(0, items_in_cart)
         result = inventoryPage.add_to_cart_all()
         quantity = result["count"]
         items = result["items"]
         time.sleep(1)
-        x = inventoryPage.get_cart_quantity()
-        print("X: ", x, "Quantity", quantity)
+        items_in_cart = inventoryPage.get_cart_quantity()
+        print("X: ", items_in_cart, "Quantity", quantity)
         # assert_and_log(self, x == quantity, "Cart has " + str(quantity) + " elements")
         # assert x == quantity
-        log_assert(quantity, x)
-        try:
-            pytest.assume(x == quantity)
-            return items
-        except:
-            return items
+        log_assert(quantity, items_in_cart)
+        return items
 
     @staticmethod
     def checkout(self, items_added_to_cart):

@@ -7,13 +7,13 @@ from pages.checkout_step_two_page import CheckoutStepTwoPage
 import unittest
 from pages.inventory_page import InventoryPage
 from pages.login_page import LoginPage
-from testcase.variables import *
+from variables import *
 from selenium import webdriver
 import time
 import logging
 from ddt import ddt, data
 from utils.common_steps import CommonSteps
-from utils.common import assert_and_log
+from utils.common import assert_and_log, log_assert
 
 
 # @ddt
@@ -26,9 +26,7 @@ class TestCheckoutPage:
     #     self.driver.get(BASE_URL)
 
     @pytest.fixture(
-        params=[
-            "standard_user"
-        ]  # "locked_out_user", "standard_user", "error_user", "problem_user"
+        params=USERS_WITHOUT_LOCKED_OUT  # "locked_out_user", "standard_user", "error_user", "problem_user"
     )
     def checkout_page(self, request):
         self.logger = logging.getLogger(__name__)
@@ -72,7 +70,7 @@ class TestCheckoutPage:
         self.driver.close()
 
     # @data("standard_user")
-    def test_checkout_final(self, checkout_page):
+    def test_checkout(self, checkout_page):
         (
             checkoutPage,
             checkoutPageStepTwo,
@@ -101,13 +99,8 @@ class TestCheckoutPage:
         except AssertionError:
             pass
 
-        # assert_and_log(
-        #     self,
-        #     checkoutPage.error_message() == ERROR_MSG_MISSING_ZIP,
-        #     "ZIP is required",
-        # )
         checkoutPage.set_zip(ZIP)
-        time.sleep(1)
+        time.sleep(0.5)
         f, l, z = checkoutPage.get_form_values()
 
         if f != FIRST_NAME or l != LAST_NAME or z != ZIP:
@@ -116,68 +109,4 @@ class TestCheckoutPage:
                 assert False
 
         checkoutPage.click_continue()
-
-    def test_checkout_view_item(self, checkout_page):
-        (
-            checkoutPage,
-            checkoutPageStepTwo,
-            cartPage,
-            InventoryPage,
-            items_added_to_cart,
-            current_user,
-        ) = checkout_page
-        checkoutPage.click_continue()
-        try:
-            assert checkoutPage.error_message() == ERROR_MSG_MISSING_FIRST_NAME
-        except AssertionError:
-            pass
-
-        checkoutPage.set_firstname(FIRST_NAME)
-        checkoutPage.click_continue()
-        try:
-            assert checkoutPage.error_message() == ERROR_MSG_MISSING_LAST_NAME
-        except AssertionError:
-            pass
-
-        checkoutPage.set_last_name(LAST_NAME)
-        checkoutPage.click_continue()
-        try:
-            assert checkoutPage.error_message() == ERROR_MSG_MISSING_ZIP
-        except AssertionError:
-            pass
-
-        # assert_and_log(
-        #     self,
-        #     checkoutPage.error_message() == ERROR_MSG_MISSING_ZIP,
-        #     "ZIP is required",
-        # )
-        checkoutPage.set_zip(ZIP)
-        time.sleep(1)
-        f, l, z = checkoutPage.get_form_values()
-
-        if f != FIRST_NAME or l != LAST_NAME or z != ZIP:
-            if checkoutPage.click_continue() == None:
-                print("Checkout should be disabled")
-                assert False
-
-        checkoutPage.click_continue()
-        time.sleep(1)
-        data = checkoutPageStepTwo.get_items()
-        names1 = [item["name"] for item in items_added_to_cart]
-        names2 = [item["name"] for item in data]
-        print("NAMES:::", names2, names1)
-        assert names1 == names2
-        final_price = sum(item["price"] for item in data)
-        price_equal = checkoutPageStepTwo.check_price(final_price)
-        # assert_and_log(self, price_equal, "Total price is equal: ")
-        assert price_equal
-
-        if price_equal:
-            checkoutPageStepTwo.click_finish()
-
-        checkoutCompletePage = CheckoutCompletePage(self.driver)
-        time.sleep(1)
-        assert checkoutCompletePage.checkout_complete()
-        checkoutCompletePage.return_to_store()
-        assert self.driver.current_url == INVENTORY_URL
-        time.sleep(1)
+        log_assert(True, checkoutPageStepTwo.page_loaded())

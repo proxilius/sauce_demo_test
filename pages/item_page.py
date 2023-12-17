@@ -1,6 +1,6 @@
 from locators.locator import *
 from pages.base_page import BasePage
-from testcase.variables import BASE_URL
+from variables import BASE_URL
 
 
 class ItemPage(BasePage):

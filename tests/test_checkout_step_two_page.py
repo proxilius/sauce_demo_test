@@ -7,13 +7,13 @@ from pages.checkout_step_two_page import CheckoutStepTwoPage
 import unittest
 from pages.inventory_page import InventoryPage
 from pages.login_page import LoginPage
-from testcase.variables import *
+from variables import *
 from selenium import webdriver
 import time
 import logging
 from ddt import ddt, data
 from utils.common_steps import CommonSteps
-from utils.common import assert_and_log
+from utils.common import assert_and_log, log_assert
 
 
 # @ddt
@@ -26,9 +26,8 @@ class TestCheckoutStepTwoPage:
     #     self.driver.get(BASE_URL)
 
     @pytest.fixture(
-        params=[
-            "standard_user"
-        ]  # "locked_out_user", "standard_user", "error_user", "problem_user"
+        params=USERS_WITHOUT_LOCKED_OUT
+        # USERS_WITHOUT_LOCKED_OUT  # "locked_out_user", "standard_user", "error_user", "problem_user"
     )
     def checkout_step_two_page(self, request):
         self.logger = logging.getLogger(__name__)
@@ -58,6 +57,7 @@ class TestCheckoutStepTwoPage:
                 assert False
 
         page_1.click_continue()
+        assert page_2.page_loaded()
         # Provide the driver instance to the test function
         yield [
             page_1,
@@ -84,7 +84,7 @@ class TestCheckoutStepTwoPage:
         self.driver.close()
 
     # @data("standard_user")
-    def test_checkout_items(self, checkout_step_two_page):
+    def test_complete_order(self, checkout_step_two_page):
         (
             checkoutPage,
             checkoutPageStepTwo,
@@ -98,18 +98,20 @@ class TestCheckoutStepTwoPage:
         names1 = [item["name"] for item in items_added_to_cart]
         names2 = [item["name"] for item in data]
         print("NAMES:::", names2, names1)
-        assert names1 == names2
+        log_assert(names1, names2)
         final_price = sum(item["price"] for item in data)
         price_equal = checkoutPageStepTwo.check_price(final_price)
         # assert_and_log(self, price_equal, "Total price is equal: ")
-        assert price_equal
+        log_assert(True, price_equal, "Price equals")
 
         if price_equal:
             checkoutPageStepTwo.click_finish()
 
         checkoutCompletePage = CheckoutCompletePage(self.driver)
         time.sleep(1)
-        assert checkoutCompletePage.checkout_complete()
+        # assert checkoutCompletePage.checkout_complete()
+        log_assert(True, checkoutCompletePage.checkout_complete(), "Checkout completed")
         checkoutCompletePage.return_to_store()
-        assert self.driver.current_url == INVENTORY_URL
+        # assert self.driver.current_url == INVENTORY_URL
+        log_assert(True, self.driver.current_url == INVENTORY_URL, "Return to products")
         time.sleep(1)

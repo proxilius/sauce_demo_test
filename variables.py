@@ -16,3 +16,20 @@ ERROR_MSG_MISSING_ZIP = "Error: Postal Code is required"
 FIRST_NAME = "John"
 LAST_NAME = "Doe"
 ZIP = "1234"
+
+ALL_USERS = [
+    "standard_user",
+    "performance_glitch_user",
+    "visual_user",
+    "locked_out_user",
+    "error_user",
+    "problem_user",
+]
+
+USERS_WITHOUT_LOCKED_OUT = [
+    "standard_user",
+    "performance_glitch_user",
+    "visual_user",
+    "error_user",
+    "problem_user",
+]

@@ -3,7 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
 import time
 from pages.base_page import BasePage
-from testcase.variables import *
+from variables import *
 from utils.common import assert_and_log
 
 

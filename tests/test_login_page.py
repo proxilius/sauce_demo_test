@@ -2,7 +2,7 @@ import pytest
 from pages.login_page import LoginPage
 
 import unittest
-from testcase.variables import *
+from variables import *
 from selenium import webdriver
 
 import time
@@ -40,7 +40,7 @@ class TestLoginPage:
 
     @pytest.mark.parametrize(
         "username",
-        ["standard_user", "error_user", "visual_user"],
+        ALL_USERS,
     )
     def test_login_valid(self, login_page, username):
         login_page.login(username, PASSWORD)
@@ -51,7 +51,7 @@ class TestLoginPage:
         log_assert(INVENTORY_URL, self.driver.current_url)
         # assert self.driver.current_url == INVENTORY_URL
 
-    @pytest.mark.parametrize("username", ["standard_user", "error_user", "visual_user"])
+    @pytest.mark.parametrize("username", USERS_WITHOUT_LOCKED_OUT)
     def test_login_invalid(self, login_page, username):
         login_page.login(username, "invalid_pw")
         error_msg = login_page.login_error()

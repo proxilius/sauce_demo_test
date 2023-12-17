@@ -1,7 +1,7 @@
 import pytest
 from selenium import webdriver
 import re
-from testcase.variables import *
+from variables import *
 import logging
 
 
