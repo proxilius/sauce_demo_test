@@ -6,6 +6,14 @@ class CommonLocators(object):
     LOGOUT_BUTTON = {"by": By.ID, "value": "logout_sidebar_link"}
 
 
+class ItemPageLocators(object):
+    ADD_REMOVE_CART_BUTTON = {"by": By.CLASS_NAME, "value": "btn_inventory"}
+    BACK_BUTTON = {"by": By.ID, "value": "back-to-products"}
+    DETAILS_CONTAINER = {"by": By.CLASS_NAME, "value": "inventory_details_container"}
+    DETAILS_NAME = {"by": By.CLASS_NAME, "value": "inventory_details_name"}
+    DETAILS_PRICE = {"by": By.CLASS_NAME, "value": "inventory_details_price"}
+
+
 class LoginPageLocators(object):
     USERNAME = {"by": By.ID, "value": "user-name"}
     PASSOWRD = {"by": By.ID, "value": "password"}
@@ -27,6 +35,7 @@ class InventoryPageLocators(object):
     ITEM_NAME = {"by": By.CLASS_NAME, "value": "inventory_item_name"}
     ITEM_DESCRIPTION = {"by": By.CLASS_NAME, "value": "inventory_item_desc"}
     ITEM_PRICE = {"by": By.CLASS_NAME, "value": "inventory_item_price"}
+    ITEM_IMG = {"by": By.TAG_NAME, "value": "a"}
 
 
 class CartPageLocators(object):

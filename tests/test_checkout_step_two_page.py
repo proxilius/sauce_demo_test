@@ -17,7 +17,7 @@ from utils.common import assert_and_log
 
 
 # @ddt
-class TestCheckoutPage:
+class TestCheckoutStepTwoPage:
     # def setUp(self):
     #     self.logger = logging.getLogger(__name__)
     #     options = webdriver.ChromeOptions()
@@ -30,7 +30,7 @@ class TestCheckoutPage:
             "standard_user"
         ]  # "locked_out_user", "standard_user", "error_user", "problem_user"
     )
-    def checkout_page(self, request):
+    def checkout_step_two_page(self, request):
         self.logger = logging.getLogger(__name__)
         options = webdriver.ChromeOptions()
         self.driver = webdriver.Chrome(options=options)
@@ -46,6 +46,18 @@ class TestCheckoutPage:
         cartPage.click_checkout()
         page_1 = CheckoutPage(self.driver)
         page_2 = CheckoutStepTwoPage(self.driver)
+        page_1.set_firstname(FIRST_NAME)
+        page_1.set_last_name(LAST_NAME)
+        page_1.set_zip(ZIP)
+        time.sleep(1)
+        f, l, z = page_1.get_form_values()
+
+        if f != FIRST_NAME or l != LAST_NAME or z != ZIP:
+            if page_1.click_continue() == None:
+                print("Checkout should be disabled")
+                assert False
+
+        page_1.click_continue()
         # Provide the driver instance to the test function
         yield [
             page_1,
@@ -72,7 +84,7 @@ class TestCheckoutPage:
         self.driver.close()
 
     # @data("standard_user")
-    def test_checkout_final(self, checkout_page):
+    def test_checkout_items(self, checkout_step_two_page):
         (
             checkoutPage,
             checkoutPageStepTwo,
@@ -80,87 +92,7 @@ class TestCheckoutPage:
             InventoryPage,
             items_added_to_cart,
             current_user,
-        ) = checkout_page
-        checkoutPage.click_continue()
-        try:
-            assert checkoutPage.error_message() == ERROR_MSG_MISSING_FIRST_NAME
-        except AssertionError:
-            pass
-
-        checkoutPage.set_firstname(FIRST_NAME)
-        checkoutPage.click_continue()
-        try:
-            assert checkoutPage.error_message() == ERROR_MSG_MISSING_LAST_NAME
-        except AssertionError:
-            pass
-
-        checkoutPage.set_last_name(LAST_NAME)
-        checkoutPage.click_continue()
-        try:
-            assert checkoutPage.error_message() == ERROR_MSG_MISSING_ZIP
-        except AssertionError:
-            pass
-
-        # assert_and_log(
-        #     self,
-        #     checkoutPage.error_message() == ERROR_MSG_MISSING_ZIP,
-        #     "ZIP is required",
-        # )
-        checkoutPage.set_zip(ZIP)
-        time.sleep(1)
-        f, l, z = checkoutPage.get_form_values()
-
-        if f != FIRST_NAME or l != LAST_NAME or z != ZIP:
-            if checkoutPage.click_continue() == None:
-                print("Checkout should be disabled")
-                assert False
-
-        checkoutPage.click_continue()
-
-    def test_checkout_view_item(self, checkout_page):
-        (
-            checkoutPage,
-            checkoutPageStepTwo,
-            cartPage,
-            InventoryPage,
-            items_added_to_cart,
-            current_user,
-        ) = checkout_page
-        checkoutPage.click_continue()
-        try:
-            assert checkoutPage.error_message() == ERROR_MSG_MISSING_FIRST_NAME
-        except AssertionError:
-            pass
-
-        checkoutPage.set_firstname(FIRST_NAME)
-        checkoutPage.click_continue()
-        try:
-            assert checkoutPage.error_message() == ERROR_MSG_MISSING_LAST_NAME
-        except AssertionError:
-            pass
-
-        checkoutPage.set_last_name(LAST_NAME)
-        checkoutPage.click_continue()
-        try:
-            assert checkoutPage.error_message() == ERROR_MSG_MISSING_ZIP
-        except AssertionError:
-            pass
-
-        # assert_and_log(
-        #     self,
-        #     checkoutPage.error_message() == ERROR_MSG_MISSING_ZIP,
-        #     "ZIP is required",
-        # )
-        checkoutPage.set_zip(ZIP)
-        time.sleep(1)
-        f, l, z = checkoutPage.get_form_values()
-
-        if f != FIRST_NAME or l != LAST_NAME or z != ZIP:
-            if checkoutPage.click_continue() == None:
-                print("Checkout should be disabled")
-                assert False
-
-        checkoutPage.click_continue()
+        ) = checkout_step_two_page
         time.sleep(1)
         data = checkoutPageStepTwo.get_items()
         names1 = [item["name"] for item in items_added_to_cart]

@@ -49,7 +49,7 @@ class TestLoginPage:
         #     "Valid login attempt",
         # )
         log_assert(INVENTORY_URL, self.driver.current_url)
-        assert self.driver.current_url == INVENTORY_URL
+        # assert self.driver.current_url == INVENTORY_URL
 
     @pytest.mark.parametrize("username", ["standard_user", "error_user", "visual_user"])
     def test_login_invalid(self, login_page, username):
@@ -60,7 +60,7 @@ class TestLoginPage:
         #     "Invalid login attempt",
         # )
         log_assert(ERROR_MSG_WRONG_PASSWORD, error_msg)
-        assert error_msg == ERROR_MSG_WRONG_PASSWORD
+        # assert error_msg == ERROR_MSG_WRONG_PASSWORD
 
     def test_login_locked_out_user(self, login_page):
         # loginPage = LoginPage(self.driver)
@@ -71,7 +71,7 @@ class TestLoginPage:
         #     "Locked out user login attempt",
         # )
         log_assert(ERROR_LOCKED_OUT_USER, error_msg)
-        assert error_msg == ERROR_LOCKED_OUT_USER
+        # assert error_msg == ERROR_LOCKED_OUT_USER
 
 
 if __name__ == "__main__":

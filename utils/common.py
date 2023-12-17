@@ -5,6 +5,8 @@ from PIL import Image, ImageChops
 from io import BytesIO
 import os
 
+import pytest
+
 project_folder = os.getcwd()
 
 # Define the relative path to the desired folder
@@ -63,6 +65,12 @@ def compare_screenshots(image1_path, image2_path):
     return float(mse) > float(threshold)
 
 
-def log_assert(expected, actual):
-    print(f"\nEXPECTED:  ---{expected}---")
-    print(f"ACTUAL:    ---{ actual}---")
+def log_assert(expected, actual, message=""):
+    print(f"\nEXPECTED:  |  {expected}  |")
+    print(f"ACTUAL:      |  {actual}    |")
+    try:
+        assert expected == actual
+        # pytest.assume(expected == actual)
+        print(f"Assertion passed: {message}")
+    except AssertionError as e:
+        raise AssertionError(f"Assertion failed: {message}")

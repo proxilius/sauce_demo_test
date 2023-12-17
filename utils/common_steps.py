@@ -4,7 +4,7 @@ import pytest
 from testcase.variables import *
 from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
-from utils.common import assert_and_log
+from utils.common import assert_and_log, log_assert
 from pages.cart_page import CartPage
 
 
@@ -26,7 +26,8 @@ class CommonSteps:
         x = inventoryPage.get_cart_quantity()
         # assert x == 0
         # assert_and_log(self, x == 0, "Cart is empty")
-        assert x == 0
+        # assert x == 0
+        log_assert(0, x)
         result = inventoryPage.add_to_cart_all()
         quantity = result["count"]
         items = result["items"]
@@ -34,13 +35,13 @@ class CommonSteps:
         x = inventoryPage.get_cart_quantity()
         print("X: ", x, "Quantity", quantity)
         # assert_and_log(self, x == quantity, "Cart has " + str(quantity) + " elements")
-        assert x == quantity
+        # assert x == quantity
+        log_assert(quantity, x)
         try:
-            assert x == quantity
+            pytest.assume(x == quantity)
             return items
-        except AssertionError:
+        except:
             return items
-            pass  #
 
     @staticmethod
     def checkout(self, items_added_to_cart):

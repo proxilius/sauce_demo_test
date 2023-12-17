@@ -114,6 +114,16 @@ class InventoryPage(BasePage):
 
         return items
 
+    def click_item_by_name(self, name):
+        item_elements = self._find_all(InventoryPageLocators.INVENTORY_ITEM)
+        for i in item_elements:
+            if self._find_child(i, InventoryPageLocators.ITEM_NAME).text == name:
+                self._find_child(i, InventoryPageLocators.ITEM_NAME).click()
+                time.sleep(0.5)
+                return True
+
+        return False
+
     def logout(self):
         self._find(CommonLocators.BURGER_BUTTON).click()
         time.sleep(0.5)
