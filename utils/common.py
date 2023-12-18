@@ -65,7 +65,7 @@ def compare_screenshots(image1_path, image2_path):
     return float(mse) > float(threshold)
 
 
-def log_assert(expected, actual, message=""):
+def assume_and_log(expected, actual, message=""):
     print(f"\nEXPECTED:  |  {expected}  |")
     print(f"ACTUAL:      |  {actual}    |")
     try:
@@ -74,4 +74,16 @@ def log_assert(expected, actual, message=""):
         if expected == actual:
             print(f"Assertion passed: {message}")
     except AssertionError as e:
+        raise AssertionError(f"Assertion failed: {message}")
+
+
+def assert_and_quit(self, expected, actual, message=""):
+    print(f"\nEXPECTED:  |  {expected}  |")
+    print(f"ACTUAL:      |  {actual}    |")
+    try:
+        assert expected == actual
+        if expected == actual:
+            print(f"Assertion passed: {message}")
+    except AssertionError as e:
+        self.driver.quit
         raise AssertionError(f"Assertion failed: {message}")

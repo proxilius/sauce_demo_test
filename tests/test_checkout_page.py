@@ -13,7 +13,7 @@ import time
 import logging
 from ddt import ddt, data
 from utils.common_steps import CommonSteps
-from utils.common import assert_and_log, log_assert
+from utils.common import assert_and_log, assert_and_quit, assume_and_log
 
 
 # @ddt
@@ -70,7 +70,7 @@ class TestCheckoutPage:
         self.driver.close()
 
     # @data("standard_user")
-    def test_checkout(self, checkout_page):
+    def test_checkout_final(self, checkout_page):
         (
             checkoutPage,
             checkoutPageStepTwo,
@@ -109,4 +109,4 @@ class TestCheckoutPage:
                 assert False
 
         checkoutPage.click_continue()
-        log_assert(True, checkoutPageStepTwo.page_loaded())
+        assume_and_log(True, checkoutPageStepTwo.page_loaded())

@@ -8,7 +8,7 @@ from selenium import webdriver
 import time
 import logging
 from ddt import ddt, data
-from utils.common import assert_and_log, log_assert
+from utils.common import assert_and_log, assume_and_log
 import os
 
 logging.basicConfig(
@@ -48,7 +48,7 @@ class TestLoginPage:
         #     self.driver.current_url == INVENTORY_URL,
         #     "Valid login attempt",
         # )
-        log_assert(INVENTORY_URL, self.driver.current_url)
+        assume_and_log(INVENTORY_URL, self.driver.current_url)
         # assert self.driver.current_url == INVENTORY_URL
 
     @pytest.mark.parametrize("username", USERS_WITHOUT_LOCKED_OUT)
@@ -59,7 +59,7 @@ class TestLoginPage:
         #     error_msg == ERROR_MSG_WRONG_PASSWORD,
         #     "Invalid login attempt",
         # )
-        log_assert(ERROR_MSG_WRONG_PASSWORD, error_msg)
+        assume_and_log(ERROR_MSG_WRONG_PASSWORD, error_msg)
         # assert error_msg == ERROR_MSG_WRONG_PASSWORD
 
     def test_login_locked_out_user(self, login_page):
@@ -70,7 +70,7 @@ class TestLoginPage:
         #     error_msg == ERROR_LOCKED_OUT_USER,
         #     "Locked out user login attempt",
         # )
-        log_assert(ERROR_LOCKED_OUT_USER, error_msg)
+        assume_and_log(ERROR_LOCKED_OUT_USER, error_msg)
         # assert error_msg == ERROR_LOCKED_OUT_USER
 
 

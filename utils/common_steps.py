@@ -4,7 +4,7 @@ import pytest
 from variables import *
 from pages.login_page import LoginPage
 from pages.inventory_page import InventoryPage
-from utils.common import assert_and_log, log_assert
+from utils.common import assert_and_log, assume_and_log
 from pages.cart_page import CartPage
 
 
@@ -20,14 +20,13 @@ class CommonSteps:
             return False
 
     @staticmethod
-    @pytest.mark.xfail
     def add_everything_to_cart(self):
         inventoryPage = InventoryPage(self.driver)
         items_in_cart = inventoryPage.get_cart_quantity()
         # assert x == 0
         # assert_and_log(self, x == 0, "Cart is empty")
         # assert x == 0
-        log_assert(0, items_in_cart)
+        assume_and_log(0, items_in_cart)
         result = inventoryPage.add_to_cart_all()
         quantity = result["count"]
         items = result["items"]
@@ -36,7 +35,7 @@ class CommonSteps:
         print("X: ", items_in_cart, "Quantity", quantity)
         # assert_and_log(self, x == quantity, "Cart has " + str(quantity) + " elements")
         # assert x == quantity
-        log_assert(quantity, items_in_cart)
+        assume_and_log(quantity, items_in_cart)
         return items
 
     @staticmethod

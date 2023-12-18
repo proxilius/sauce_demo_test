@@ -11,7 +11,7 @@ import time
 import logging
 from ddt import ddt, data
 import os
-from utils.common import assert_and_log, log_assert
+from utils.common import assert_and_log, assume_and_log
 from utils.common_steps import CommonSteps
 from utils.common import capture_screenshot, compare_screenshots
 
@@ -69,11 +69,11 @@ class TestInventoryPage:
 
         if compare_screenshots(base_screenshot_path, screenshot_to_compare_path):
             print("Misalignment detected!")
-            log_assert(True, False, "Misalignment detected!")
+            assume_and_log(True, False, "Misalignment detected!")
             # assert False
         else:
             print("No misalignment.")
-            log_assert(True, True, "No misalignment")
+            assume_and_log(True, True, "No misalignment")
             # assert_and_log(True, "No misalignment.")
             # assert True
 
@@ -125,7 +125,7 @@ class TestInventoryPage:
         # assert [item["name"] for item in items_in_cart] == [
         #     item["name"] for item in to_be_added
         # ]
-        log_assert(
+        assume_and_log(
             [item["name"] for item in items_in_cart],
             [item["name"] for item in to_be_added],
         )
@@ -136,7 +136,9 @@ class TestInventoryPage:
         ]
 
         # assert [item["name"] for item in items_in_cart] == [to_be_added[1]["name"]]
-        log_assert([item["name"] for item in items_in_cart], [to_be_added[1]["name"]])
+        assume_and_log(
+            [item["name"] for item in items_in_cart], [to_be_added[1]["name"]]
+        )
 
     # @data("standard_user")
     def test_logout(self, inventory_page):
@@ -147,24 +149,30 @@ class TestInventoryPage:
 
     def test_remove_item_from_item_page(self, inventory_page):
         inventoryPage, username = inventory_page
-        items_in_cart = CommonSteps.add_everything_to_cart(self)
-        inventoryPage.click_item_by_name(items_in_cart[0]["name"])
         itemPage = ItemPage(self.driver)
-        log_assert(True, itemPage.item_page_loaded())
-        itemPage.click_add_remove_button("remove")
-        itemPage.click_back_to_products()
+        items_in_cart = CommonSteps.add_everything_to_cart(self)
+        for item in items_in_cart:
+            inventoryPage.click_item_by_name(item["name"])
+            assume_and_log(True, itemPage.item_page_loaded())
+            itemPage.click_add_remove_button("remove")
+            itemPage.click_back_to_products()
+
         items_after_remove = [
             item for item in inventoryPage.get_items_all() if item["in_cart"] == True
         ]
-        log_assert(items_after_remove, items_in_cart[1:])
+        quantity = inventoryPage.get_cart_quantity()
+        assume_and_log(0, quantity, "Cart quantity equals")
+        assume_and_log(items_after_remove, [])  # items_in_cart[1:]
 
     def test_add_item_from_item_page(self, inventory_page):
         inventoryPage, username = inventory_page
         items = inventoryPage.get_items_all()
         inventoryPage.click_item_by_name(items[0]["name"])
         itemPage = ItemPage(self.driver)
-        log_assert(True, itemPage.item_page_loaded(), "Item page is loaded")
-        log_assert(True, itemPage.check_item_loaded(items[0]), "Correct item is loaded")
+        assume_and_log(True, itemPage.item_page_loaded(), "Item page is loaded")
+        assume_and_log(
+            True, itemPage.check_item_loaded(items[0]), "Correct item is loaded"
+        )
         itemPage.click_add_remove_button("add")
         itemPage.click_back_to_products()
         items_after_adding = [
@@ -173,7 +181,7 @@ class TestInventoryPage:
         items = inventoryPage.get_items_all()
         items_assert = []
         items_assert.append(items[0])
-        log_assert(items_assert, items_after_adding)
+        assume_and_log(items_assert, items_after_adding)
 
 
 if __name__ == "__main__":

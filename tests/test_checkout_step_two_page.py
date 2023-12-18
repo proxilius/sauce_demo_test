@@ -13,7 +13,7 @@ import time
 import logging
 from ddt import ddt, data
 from utils.common_steps import CommonSteps
-from utils.common import assert_and_log, log_assert
+from utils.common import assert_and_log, assert_and_quit, assume_and_log
 
 
 # @ddt
@@ -98,11 +98,11 @@ class TestCheckoutStepTwoPage:
         names1 = [item["name"] for item in items_added_to_cart]
         names2 = [item["name"] for item in data]
         print("NAMES:::", names2, names1)
-        log_assert(names1, names2)
+        assume_and_log(names1, names2)
         final_price = sum(item["price"] for item in data)
         price_equal = checkoutPageStepTwo.check_price(final_price)
         # assert_and_log(self, price_equal, "Total price is equal: ")
-        log_assert(True, price_equal, "Price equals")
+        assume_and_log(True, price_equal, "Price equals")
 
         if price_equal:
             checkoutPageStepTwo.click_finish()
@@ -110,8 +110,12 @@ class TestCheckoutStepTwoPage:
         checkoutCompletePage = CheckoutCompletePage(self.driver)
         time.sleep(1)
         # assert checkoutCompletePage.checkout_complete()
-        log_assert(True, checkoutCompletePage.checkout_complete(), "Checkout completed")
+        assume_and_log(
+            True, checkoutCompletePage.checkout_complete(), "Checkout completed"
+        )
         checkoutCompletePage.return_to_store()
         # assert self.driver.current_url == INVENTORY_URL
-        log_assert(True, self.driver.current_url == INVENTORY_URL, "Return to products")
+        assume_and_log(
+            True, self.driver.current_url == INVENTORY_URL, "Return to products"
+        )
         time.sleep(1)
