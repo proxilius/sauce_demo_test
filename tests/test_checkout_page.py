@@ -16,15 +16,7 @@ from utils.common_steps import CommonSteps
 from utils.common import assert_and_log, assert_and_quit, assume_and_log
 
 
-# @ddt
 class TestCheckoutPage:
-    # def setUp(self):
-    #     self.logger = logging.getLogger(__name__)
-    #     options = webdriver.ChromeOptions()
-    #     self.driver = webdriver.Chrome(options=options)
-    #     self.driver.maximize_window()
-    #     self.driver.get(BASE_URL)
-
     @pytest.fixture(
         params=USERS_WITHOUT_LOCKED_OUT  # "locked_out_user", "standard_user", "error_user", "problem_user"
     )
@@ -75,7 +67,7 @@ class TestCheckoutPage:
             checkoutPage,
             checkoutPageStepTwo,
             cartPage,
-            InventoryPage,
+            inventoryPage,
             items_added_to_cart,
             current_user,
         ) = checkout_page

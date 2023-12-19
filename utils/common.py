@@ -45,7 +45,7 @@ def capture_screenshot(driver, filename):
     screenshot.save(filename)
 
 
-def compare_screenshots(image1_path, image2_path):
+def compare_screenshots(image1_path, image2_path, threshold=1):
     # Read the images
     image1 = cv2.imread(image1_path)
     image2 = cv2.imread(image2_path)
@@ -59,13 +59,15 @@ def compare_screenshots(image1_path, image2_path):
     diff = cv2.subtract(gray_image1, gray_image2)
     err = np.sum(diff**2)
     mse = err / (float(h * w))
-    threshold = 1  # You may need to adjust this threshold based on your needs
+    # threshold = 1  # You may need to adjust this threshold based on your needs
     print("MSE::: ", mse)
     # assert not (float(mse) > float(threshold))
     return float(mse) > float(threshold)
 
 
 def assume_and_log(expected, actual, message=""):
+    if message != "":
+        print(f"\nChecking: {message}")
     print(f"\nEXPECTED:  |  {expected}  |")
     print(f"ACTUAL:      |  {actual}    |")
     try:

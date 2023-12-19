@@ -48,6 +48,7 @@ class CartPageLocators(object):
     CHECKOUT_BUTTON = {"by": By.ID, "value": "checkout"}
     CONTINUE_SHOPPING_BUTTON = {"by": By.ID, "value": "continue-shopping"}
     CART_BUTTON = {"by": By.CLASS_NAME, "value": "cart_button"}
+    SHOPPING_CART_BADGE = {"by": By.CLASS_NAME, "value": "shopping_cart_badge"}
 
 
 class CheckoutPageLocators(object):

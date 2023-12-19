@@ -38,6 +38,15 @@ class CartPage(BasePage):
 
         return False
 
+    def get_cart_quantity(self):
+        try:
+            shopping_cart_badge_element = self.driver.find_element(
+                By.CLASS_NAME, CartPageLocators.SHOPPING_CART_BADGE["value"]
+            )
+            return int(shopping_cart_badge_element.text)
+        except:
+            return 0
+
     def remove_item_by_name(self, name):
         item = self.cart_item(name)
         assert item, f"Cannot remove item '{name}' from cart, item not found"

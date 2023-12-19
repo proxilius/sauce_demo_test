@@ -11,20 +11,11 @@ from variables import *
 from selenium import webdriver
 import time
 import logging
-from ddt import ddt, data
 from utils.common_steps import CommonSteps
-from utils.common import assert_and_log, assert_and_quit, assume_and_log
+from utils.common import assume_and_log
 
 
-# @ddt
 class TestCheckoutStepTwoPage:
-    # def setUp(self):
-    #     self.logger = logging.getLogger(__name__)
-    #     options = webdriver.ChromeOptions()
-    #     self.driver = webdriver.Chrome(options=options)
-    #     self.driver.maximize_window()
-    #     self.driver.get(BASE_URL)
-
     @pytest.fixture(
         params=USERS_WITHOUT_LOCKED_OUT
         # USERS_WITHOUT_LOCKED_OUT  # "locked_out_user", "standard_user", "error_user", "problem_user"
@@ -89,7 +80,7 @@ class TestCheckoutStepTwoPage:
             checkoutPage,
             checkoutPageStepTwo,
             cartPage,
-            InventoryPage,
+            inventoryPage,
             items_added_to_cart,
             current_user,
         ) = checkout_step_two_page

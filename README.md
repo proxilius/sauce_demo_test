@@ -60,7 +60,7 @@ This is an example of how to list things you need to use the software and how to
 * Google Chrome
 * install requirements.txt
   ```sh
-  pip install requirements.txt
+  pip install requirements.txt pip install pytest-timestamper
   ```
 
 
@@ -70,7 +70,7 @@ This is an example of how to list things you need to use the software and how to
 Navigate into root folder: ../sacuce_demo_test
 * To run all test cases (with a txt file as log, names "output_final.txt"): 
 ```sh
-   pytest -v -s > output_final.txt
+   pytest -v -s > output_final.txt --durations=0 
   ```
 * To run only login page test cases (with a txt file as log, names "output_final.txt"): 
 ```sh

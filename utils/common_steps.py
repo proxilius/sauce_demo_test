@@ -35,7 +35,7 @@ class CommonSteps:
         print("X: ", items_in_cart, "Quantity", quantity)
         # assert_and_log(self, x == quantity, "Cart has " + str(quantity) + " elements")
         # assert x == quantity
-        assume_and_log(quantity, items_in_cart)
+        # assume_and_log(quantity, items_in_cart)
         return items
 
     @staticmethod

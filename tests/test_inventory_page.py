@@ -16,18 +16,7 @@ from utils.common_steps import CommonSteps
 from utils.common import capture_screenshot, compare_screenshots
 
 
-# @ddt
 class TestInventoryPage:
-    # def setUp(self):
-    #     self.logger = logging.getLogger(__name__)
-    #     options = webdriver.ChromeOptions()
-    #     self.driver = webdriver.Chrome(options=options)
-    #     self.driver.maximize_window()
-    #     loginPage = LoginPage(self.driver)
-    #     self.driver.get(BASE_URL)
-    #     # loginPage.access_login_page()
-    #     # return loginPage
-
     @pytest.fixture(params=USERS_WITHOUT_LOCKED_OUT)
     def inventory_page(self, request):
         self.logger = logging.getLogger(__name__)
@@ -37,6 +26,7 @@ class TestInventoryPage:
         loginPage = LoginPage(self.driver)
         loginPage.access_login_page()
         loginPage.login(request.param, PASSWORD)
+        assert not loginPage.login_error()
         inventoryPage = InventoryPage(self.driver)
         # Provide the driver instance to the test function
         yield [inventoryPage, request.param]
@@ -78,24 +68,32 @@ class TestInventoryPage:
             # assert True
 
     # @data("standard_user")
-    def test_add_to_cart(self, inventory_page):
+    def test_add_to_cart_everything(self, inventory_page):
+        inventoryPage, username = inventory_page
         CommonSteps.add_everything_to_cart(self)
+        quantity = inventoryPage.get_cart_quantity()
+        items = inventoryPage.get_items_all()
+        assume_and_log(quantity, len(items))
 
     def check_sort(self, counter, current_items):
         item_names = [i["name"] for i in current_items]
         item_prices = [i["price"] for i in current_items]
 
         if counter == 0:
-            assert item_prices == sorted(item_prices, reverse=True)
+            assume_and_log(item_prices, sorted(item_prices, reverse=True))
+            # assert item_prices == sorted(item_prices, reverse=True)
             return
         if counter == 1:
-            assert item_prices == sorted(item_prices)
+            # assert item_prices == sorted(item_prices)
+            assume_and_log(item_prices, sorted(item_prices))
             return
         if counter == 2:
-            assert item_names == sorted(item_names)
+            assume_and_log(item_names, sorted(item_names))
+            # assert item_names == sorted(item_names)
             return
         if counter == 3:
-            assert item_names == sorted(item_names, reverse=True)
+            assume_and_log(item_names, sorted(item_names, reverse=True))
+            # assert item_names == sorted(item_names, reverse=True)
             return
 
     # @data("error_user")
