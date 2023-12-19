@@ -74,7 +74,6 @@ class TestCheckoutStepTwoPage:
         time.sleep(1)
         self.driver.close()
 
-    # @data("standard_user")
     def test_complete_order(self, checkout_step_two_page):
         (
             checkoutPage,
@@ -110,3 +109,15 @@ class TestCheckoutStepTwoPage:
             True, self.driver.current_url == INVENTORY_URL, "Return to products"
         )
         time.sleep(1)
+
+    def test_cancel_order(self, checkout_step_two_page):
+        (
+            checkoutPage,
+            checkoutPageStepTwo,
+            cartPage,
+            inventoryPage,
+            items_added_to_cart,
+            current_user,
+        ) = checkout_step_two_page
+        checkoutPageStepTwo.click_cancel()
+        assume_and_log(self.driver.current_url, INVENTORY_URL)

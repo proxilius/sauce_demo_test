@@ -12,6 +12,9 @@ class CheckoutStepTwoPage(BasePage):
     def click_finish(self):
         return self._click(CheckoutPageStepTwoLocators.FINISH_BUTTON)
 
+    def click_cancel(self):
+        return self._click(CheckoutPageStepTwoLocators.CANCEL_BUTTON)
+
     def get_items(self):
         items = []
         item_elements = self._find_all(CheckoutPageStepTwoLocators.CART_ITEM)
