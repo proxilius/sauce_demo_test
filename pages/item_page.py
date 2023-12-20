@@ -1,4 +1,4 @@
-from locators.locator import *
+from locators.item_page_locators import *
 from pages.base_page import BasePage
 from variables import BASE_URL
 

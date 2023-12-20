@@ -40,14 +40,16 @@ class TestInventoryPage:
         self.driver.close()
 
     # @pytest.mark.parametrize("username", ["standard_user", "error_user", "visual_user"])
-    def test_check_alignments(self, inventory_page):
+    def test_check_alignments_inventory_page(self, inventory_page):
         inventoryPage, username = inventory_page
         project_folder = os.getcwd()
         # base_screenshot_path = os.path.join(
         #     project_folder, "./screenshots/base_screenshot.png"
         # )
-        base_screenshot_path = "./screenshots/base_screenshot.png"
-        screenshot_to_compare_path = "./screenshots/screenshot_to_compare.png"
+        base_screenshot_path = "./screenshots/base_screenshot_inventory_page.png"
+        screenshot_to_compare_path = (
+            "./screenshots/screenshot_to_compare_inventory_page.png"
+        )
         # screenshot_to_compare_path = os.path.join(
         #     project_folder, "/screenshots/screenshot_to_compare.png"
         # )

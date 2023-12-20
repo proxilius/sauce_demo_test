@@ -17,9 +17,8 @@ from utils.common import assume_and_log
 
 class TestCheckoutStepTwoPage:
     @pytest.fixture(
-        params=USERS_WITHOUT_LOCKED_OUT
-        # USERS_WITHOUT_LOCKED_OUT  # "locked_out_user", "standard_user", "error_user", "problem_user"
-    )
+        params=["standard_user", "performance_glitch_user", "visual_user"]
+    )  # problem_user and error_user cant checkout
     def checkout_step_two_page(self, request):
         self.logger = logging.getLogger(__name__)
         options = webdriver.ChromeOptions()

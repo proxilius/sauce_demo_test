@@ -1,6 +1,5 @@
 from pages.base_page import BasePage
-from selenium.webdriver.common.by import By
-from locators.locator import CheckoutCompletePageLocators
+from locators.checkout_complete_page_locators import CheckoutCompletePageLocators
 
 
 class CheckoutCompletePage(BasePage):

@@ -1,7 +1,4 @@
-from locators.locator import *
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support.ui import Select
-import time
+from locators.checkout_page_locators import *
 from pages.base_page import BasePage
 from selenium.webdriver.common.keys import Keys
 

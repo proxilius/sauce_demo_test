@@ -1,4 +1,4 @@
-from locators.locator import *
+from locators.inventory_page_locators import *
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
 import time
