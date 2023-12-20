@@ -6,14 +6,7 @@ class BasePage:
     def __init__(self, driver):
         self.driver = driver
 
-    def _visit(self, url):
-        if url.startswith("http"):
-            self.driver.get(url)
-        else:
-            self.driver.get(config.baseurl + url)
-
     def _find(self, locator):
-        # TODO: facilitate using data-test attribute as well as selenium 'By' locators
         try:
             return self._find_all(locator)[0]
         except IndexError:
@@ -51,8 +44,6 @@ class BasePage:
             element.click()
         except TypeError:
             raise AssertionError("Input should be a locator object")
-        # assert element, f"Click action failed, cannot locate an element with {locator}"
-        # self._find(locator).click()
 
     def _type(self, locator, input_text):
         self._find(locator).send_keys(input_text)

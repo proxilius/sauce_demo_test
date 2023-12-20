@@ -6,12 +6,9 @@ from pages.item_page import ItemPage
 import unittest
 from variables import *
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 import time
 import logging
-from ddt import ddt, data
-import os
-from utils.common import assert_and_log, assume_and_log
+from utils.common import assume_and_log
 from utils.common_steps import CommonSteps
 from utils.common import capture_screenshot, compare_screenshots
 
@@ -32,27 +29,17 @@ class TestInventoryPage:
         yield [inventoryPage, request.param]
         # Teardown
         self.driver.quit()
-        # return inventoryPage
-        return [inventoryPage, request.param]
 
     def tearDown(self):
         time.sleep(1)
         self.driver.close()
 
-    # @pytest.mark.parametrize("username", ["standard_user", "error_user", "visual_user"])
     def test_check_alignments_inventory_page(self, inventory_page):
         inventoryPage, username = inventory_page
-        project_folder = os.getcwd()
-        # base_screenshot_path = os.path.join(
-        #     project_folder, "./screenshots/base_screenshot.png"
-        # )
         base_screenshot_path = "./screenshots/base_screenshot_inventory_page.png"
         screenshot_to_compare_path = (
             "./screenshots/screenshot_to_compare_inventory_page.png"
         )
-        # screenshot_to_compare_path = os.path.join(
-        #     project_folder, "/screenshots/screenshot_to_compare.png"
-        # )
         time.sleep(0.5)
         if username == "standard_user":
             capture_screenshot(self.driver, base_screenshot_path)
@@ -62,14 +49,10 @@ class TestInventoryPage:
         if compare_screenshots(base_screenshot_path, screenshot_to_compare_path):
             print("Misalignment detected!")
             assume_and_log(True, False, "Misalignment detected!")
-            # assert False
         else:
             print("No misalignment.")
             assume_and_log(True, True, "No misalignment")
-            # assert_and_log(True, "No misalignment.")
-            # assert True
 
-    # @data("standard_user")
     def test_add_to_cart_everything(self, inventory_page):
         inventoryPage, username = inventory_page
         CommonSteps.add_everything_to_cart(self)
@@ -83,22 +66,17 @@ class TestInventoryPage:
 
         if counter == 0:
             assume_and_log(item_prices, sorted(item_prices, reverse=True))
-            # assert item_prices == sorted(item_prices, reverse=True)
             return
         if counter == 1:
-            # assert item_prices == sorted(item_prices)
             assume_and_log(item_prices, sorted(item_prices))
             return
         if counter == 2:
             assume_and_log(item_names, sorted(item_names))
-            # assert item_names == sorted(item_names)
             return
         if counter == 3:
             assume_and_log(item_names, sorted(item_names, reverse=True))
-            # assert item_names == sorted(item_names, reverse=True)
             return
 
-    # @data("error_user")
     def test_sort(self, inventory_page):
         inventoryPage, username = inventory_page
         sort_values = ["hilo", "lohi", "az", "za"]
@@ -110,7 +88,6 @@ class TestInventoryPage:
             self.check_sort(counter, items)
             counter = counter + 1
 
-    # @data("standard_user")
     def test_add_to_cart_some_element(self, inventory_page):
         inventoryPage, username = inventory_page
         items = inventoryPage.get_items_all()
@@ -122,9 +99,6 @@ class TestInventoryPage:
             item for item in inventoryPage.get_items_all() if item["in_cart"] == True
         ]
 
-        # assert [item["name"] for item in items_in_cart] == [
-        #     item["name"] for item in to_be_added
-        # ]
         assume_and_log(
             [item["name"] for item in items_in_cart],
             [item["name"] for item in to_be_added],
@@ -135,12 +109,10 @@ class TestInventoryPage:
             item for item in inventoryPage.get_items_all() if item["in_cart"] == True
         ]
 
-        # assert [item["name"] for item in items_in_cart] == [to_be_added[1]["name"]]
         assume_and_log(
             [item["name"] for item in items_in_cart], [to_be_added[1]["name"]]
         )
 
-    # @data("standard_user")
     def test_logout(self, inventory_page):
         inventoryPage, username = inventory_page
         if not inventoryPage:
@@ -179,9 +151,7 @@ class TestInventoryPage:
             item for item in inventoryPage.get_items_all() if item["in_cart"] == True
         ]
         items = inventoryPage.get_items_all()
-        items_assert = []
-        items_assert.append(items[0])
-        assume_and_log(items_assert, items_after_adding)
+        assume_and_log([items[0]], items_after_adding)
 
 
 if __name__ == "__main__":

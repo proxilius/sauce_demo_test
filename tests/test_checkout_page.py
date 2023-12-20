@@ -1,19 +1,16 @@
-# from pages.page import InventoryPage, CartPage, CheckoutPage, CheckoutStepTwoPage
 import pytest
 from pages.cart_page import CartPage
 from pages.checkout_complete_page import CheckoutCompletePage
 from pages.checkout_page import CheckoutPage
 from pages.checkout_step_two_page import CheckoutStepTwoPage
-import unittest
 from pages.inventory_page import InventoryPage
 from pages.login_page import LoginPage
 from variables import *
 from selenium import webdriver
 import time
 import logging
-from ddt import ddt, data
 from utils.common_steps import CommonSteps
-from utils.common import assert_and_log, assert_and_quit, assume_and_log
+from utils.common import assume_and_log
 
 
 class TestCheckoutPage:
@@ -47,15 +44,6 @@ class TestCheckoutPage:
         ]
         # Teardown
         self.driver.quit()
-        # return inventoryPage
-        return [
-            page_1,
-            page_2,
-            cartPage,
-            inventoryPage,
-            added_items_to_cart,
-            request.param,
-        ]
 
     def tearDown(self):
         time.sleep(1)

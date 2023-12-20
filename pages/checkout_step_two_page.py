@@ -41,5 +41,4 @@ class CheckoutStepTwoPage(BasePage):
         total_price = float(
             self._find(CheckoutStepTwoPageLocators.TOTAL_PRICE_LABEL).text.split("$")[1]
         )
-        # print(total_price, final_price)
         return total_price == final_price

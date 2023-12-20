@@ -1,15 +1,11 @@
 import pytest
 from pages.login_page import LoginPage
-
 import unittest
 from variables import *
 from selenium import webdriver
-
 import time
 import logging
-from ddt import ddt, data
-from utils.common import assert_and_log, assume_and_log
-import os
+from utils.common import assume_and_log
 
 logging.basicConfig(
     filename="logfile.txt",
@@ -31,8 +27,6 @@ class TestLoginPage:
         yield loginPage
         # Teardown
         self.driver.quit()
-        # return inventoryPage
-        return loginPage
 
     def tearDown(self):
         time.sleep(1)
@@ -44,34 +38,18 @@ class TestLoginPage:
     )
     def test_login_valid(self, login_page, username):
         login_page.login(username, PASSWORD)
-        # assert_and_log(
-        #     self.driver.current_url == INVENTORY_URL,
-        #     "Valid login attempt",
-        # )
         assume_and_log(INVENTORY_URL, self.driver.current_url)
-        # assert self.driver.current_url == INVENTORY_URL
 
     @pytest.mark.parametrize("username", USERS_WITHOUT_LOCKED_OUT)
     def test_login_invalid(self, login_page, username):
         login_page.login(username, "invalid_pw")
         error_msg = login_page.login_error()
-        # assert_and_log(
-        #     error_msg == ERROR_MSG_WRONG_PASSWORD,
-        #     "Invalid login attempt",
-        # )
         assume_and_log(ERROR_MSG_WRONG_PASSWORD, error_msg)
-        # assert error_msg == ERROR_MSG_WRONG_PASSWORD
 
     def test_login_locked_out_user(self, login_page):
-        # loginPage = LoginPage(self.driver)
         login_page.login(LOCKED_OUT_USER, PASSWORD)
         error_msg = login_page.login_error()
-        # assert_and_log(
-        #     error_msg == ERROR_LOCKED_OUT_USER,
-        #     "Locked out user login attempt",
-        # )
         assume_and_log(ERROR_LOCKED_OUT_USER, error_msg)
-        # assert error_msg == ERROR_LOCKED_OUT_USER
 
 
 if __name__ == "__main__":

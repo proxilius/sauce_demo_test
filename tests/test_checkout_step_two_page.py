@@ -1,10 +1,8 @@
-# from pages.page import InventoryPage, CartPage, CheckoutPage, CheckoutStepTwoPage
 import pytest
 from pages.cart_page import CartPage
 from pages.checkout_complete_page import CheckoutCompletePage
 from pages.checkout_page import CheckoutPage
 from pages.checkout_step_two_page import CheckoutStepTwoPage
-import unittest
 from pages.inventory_page import InventoryPage
 from pages.login_page import LoginPage
 from variables import *
@@ -59,15 +57,6 @@ class TestCheckoutStepTwoPage:
         ]
         # Teardown
         self.driver.quit()
-        # return inventoryPage
-        return [
-            page_1,
-            page_2,
-            cartPage,
-            inventoryPage,
-            added_items_to_cart,
-            request.param,
-        ]
 
     def tearDown(self):
         time.sleep(1)
@@ -90,7 +79,6 @@ class TestCheckoutStepTwoPage:
         assume_and_log(names1, names2)
         final_price = sum(item["price"] for item in data)
         price_equal = checkoutPageStepTwo.check_price(final_price)
-        # assert_and_log(self, price_equal, "Total price is equal: ")
         assume_and_log(True, price_equal, "Price equals")
 
         if price_equal:
@@ -98,12 +86,10 @@ class TestCheckoutStepTwoPage:
 
         checkoutCompletePage = CheckoutCompletePage(self.driver)
         time.sleep(1)
-        # assert checkoutCompletePage.checkout_complete()
         assume_and_log(
             True, checkoutCompletePage.checkout_complete(), "Checkout completed"
         )
         checkoutCompletePage.return_to_store()
-        # assert self.driver.current_url == INVENTORY_URL
         assume_and_log(
             True, self.driver.current_url == INVENTORY_URL, "Return to products"
         )

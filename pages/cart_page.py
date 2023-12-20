@@ -55,7 +55,6 @@ class CartPage(BasePage):
             in self._find_child(item, CartPageLocators.CART_BUTTON).text.lower()
         ):
             self._find_child(item, CartPageLocators.CART_BUTTON).click()
-            print("REMOVING:::: ", name)
 
     def click_item_by_name(self, name):
         item_elements = self._find_all(CartPageLocators.CART_ITEM)

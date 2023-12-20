@@ -1,19 +1,16 @@
-from ddt import ddt, data
 import unittest
 import time
 import logging
 import pytest
 from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 from pages.login_page import LoginPage
 from pages.item_page import ItemPage
 from variables import *
 from pages.inventory_page import InventoryPage
 from pages.cart_page import CartPage
-from utils.common import assert_and_log, assume_and_log
+from utils.common import assume_and_log
 from utils.common_steps import CommonSteps
 from utils.common import capture_screenshot, compare_screenshots
-import os
 
 
 class TestCartPage:
@@ -35,8 +32,6 @@ class TestCartPage:
         yield [page, inventoryPage, items_added_to_cart, request.param]
         # Teardown
         self.driver.quit()
-        # return inventoryPage
-        return [page, inventoryPage, items_added_to_cart, request.param]
 
     def tearDown(self):
         time.sleep(1)
@@ -89,7 +84,6 @@ class TestCartPage:
         print("items: ", items, "items added to cart: ", items_added_to_cart)
         assume_and_log(items_added_to_cart[1:], items_in_cart)
 
-    # @data("locked_out_user", "standard_user")
     def test_checkout_cart(self, cart_page):
         cartPage, InventoryPage, items_added_to_cart, current_user = cart_page
         items_in_cart = cartPage.get_cart_items_all()
@@ -103,11 +97,6 @@ class TestCartPage:
             cartPage.click_checkout()
         else:
             if cartPage.click_checkout() == None:
-                # assert_and_log(
-                #     self,
-                #     False,
-                #     "Cart is empty, checkout should be disabled",
-                # )
                 assert False
 
     def test_checkout2_cart_with_zero_elements(self, cart_page):
@@ -132,19 +121,12 @@ class TestCartPage:
         cartPage, InventoryPage, items_added_to_cart, current_user = cart_page
         items_in_cart = cartPage.get_cart_items_all()
         time.sleep(2)
-
         for item in items_in_cart:
             cartPage.remove_item_by_name(item["name"])
+
         time.sleep(2)
-        project_folder = os.getcwd()
-        # base_screenshot_path = os.path.join(
-        #     project_folder, "./screenshots/base_screenshot.png"
-        # )
         base_screenshot_path = "./screenshots/base_screenshot_cart_page.png"
         screenshot_to_compare_path = "./screenshots/screenshot_to_compare_cart_page.png"
-        # screenshot_to_compare_path = os.path.join(
-        #     project_folder, "/screenshots/screenshot_to_compare.png"
-        # )
         time.sleep(0.5)
         if current_user == "standard_user":
             capture_screenshot(self.driver, base_screenshot_path)
@@ -154,12 +136,9 @@ class TestCartPage:
         if compare_screenshots(base_screenshot_path, screenshot_to_compare_path, 0.2):
             print("Misalignment detected!")
             assume_and_log(True, False, "Misalignment detected!")
-            # assert False
         else:
             print("No misalignment.")
             assume_and_log(True, True, "No misalignment")
-            # assert_and_log(True, "No misalignment.")
-            # assert True
 
 
 if __name__ == "__main__":

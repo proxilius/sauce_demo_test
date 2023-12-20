@@ -1,4 +1,5 @@
 from locators.inventory_page_locators import *
+from locators.locator import *
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
 import time
@@ -128,6 +129,4 @@ class InventoryPage(BasePage):
         self._find(CommonLocators.BURGER_BUTTON).click()
         time.sleep(0.5)
         self._find(CommonLocators.LOGOUT_BUTTON).click()
-        # print("Curent: ", self.driver.current_url, "base: ", BASE_URL)
-        # assert_and_log(self, self.driver.current_url == BASE_URL, "Logging out")
         assert self.driver.current_url == BASE_URL
