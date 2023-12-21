@@ -8,7 +8,7 @@
     <img src="sauce_logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Sauce Lab Test Demo</h3>
+  <h3 align="center">Sauce Labs Demo Test</h3>
 
 </div>
 
@@ -66,6 +66,7 @@ This is an example of how to list things you need to use the software and how to
 * In case the ChromeDriver is not detected automatically, you can configure it using this page:
   https://www.browserstack.com/guide/run-selenium-tests-using-selenium-chromedriver
 
+* The project was developed and tested using Windows (Windows 10) operating system.
 
 
 <!-- USAGE EXAMPLES -->
