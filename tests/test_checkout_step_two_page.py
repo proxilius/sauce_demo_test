@@ -62,7 +62,7 @@ class TestCheckoutStepTwoPage:
         time.sleep(1)
         self.driver.close()
 
-    def test_complete_order(self, checkout_step_two_page):
+    def test_check_total_price(self, checkout_step_two_page):
         (
             checkoutPage,
             checkoutPageStepTwo,
@@ -81,11 +81,18 @@ class TestCheckoutStepTwoPage:
         price_equal = checkoutPageStepTwo.check_price(final_price)
         assume_and_log(True, price_equal, "Price equals")
 
-        if price_equal:
-            checkoutPageStepTwo.click_finish()
-
+    def test_complete_order(self, checkout_step_two_page):
+        (
+            checkoutPage,
+            checkoutPageStepTwo,
+            cartPage,
+            inventoryPage,
+            items_added_to_cart,
+            current_user,
+        ) = checkout_step_two_page
         checkoutCompletePage = CheckoutCompletePage(self.driver)
         time.sleep(1)
+        checkoutPageStepTwo.click_finish()
         assume_and_log(
             True, checkoutCompletePage.checkout_complete(), "Checkout completed"
         )

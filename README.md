@@ -71,21 +71,26 @@ This is an example of how to list things you need to use the software and how to
 <!-- USAGE EXAMPLES -->
 ## Usage
 Navigate into root folder: ../sacuce_demo_test
-* To run all test cases (with a txt file as log, names "output_final.txt"): 
+* To run all test cases (with a txt file as log, named "output_final.txt"): 
 ```sh
    pytest -v -s > output_final.txt --durations=0 
   ```
-  Running all the tests takes about 13 minutes! A real log result can be found in the repository. (output_final_result.txt)
+* To create a html file, you can use the --html flag with the name provided: 
+  ```sh
+   pytest -v -s > output_final.txt --durations=0 --html=report.html --self-contained-html
+  ```
+   
+  Running all the tests takes about 15 minutes! A real log result can be found in the repository. (output_final_result.txt)
 
-* To run only login page test cases (with a txt file as log, names "output_final.txt"): 
+* To run only login page test cases (with a txt file as log, named "output_final.txt"): 
 ```sh
    pytest -k TestLoginPage -v -s  > output_final.txt
   ```
-* To run only inventory page test cases (with a txt file as log, names "output_final.txt"): 
+* To run only inventory page test cases (with a txt file as log, named "output_final.txt"): 
 ```sh
    pytest -k TestInventoryPage -v -s  > output_final.txt
   ```
-* To run only cart page test cases (with a txt file as log, names "output_final.txt"): 
+* To run only cart page test cases (with a txt file as log, named "output_final.txt"): 
 ```sh
    pytest -k TestCartPage -v -s  > output_final.txt
   ```
@@ -93,7 +98,7 @@ Navigate into root folder: ../sacuce_demo_test
 ```sh
    pytest -k TestCheckoutPage -v -s  > output_final.txt
   ```
-* To run only checkout step two page test cases (with a txt file as log, names "output_final.txt"): 
+* To run only checkout step two page test cases (with a txt file as log, named "output_final.txt"): 
 ```sh
    pytest -k TestCheckoutStepTwoPage -v -s  > output_final.txt
   ```
@@ -133,7 +138,7 @@ Inventory page  tests
   * Login with different users, then visit inventory page
 #### Connected tests
 * test_check_alignments_inventory_page: 
-  * Testing if alignements are correct.
+  * Testing if alignments are correct.
 * test_add_to_cart_everything: 
   * Testing if all items are added to the cart.
 * test_add_to_cart_some_element: 
@@ -158,6 +163,7 @@ Cart page  tests
   * Accessing login page
   * Login with different users, then visit inventory page
   * Adding every item to cart
+  * Navigating to Cart page
 #### Connected tests
 * test_continue_shopping: 
   * Testing if "Continue shopping" button navigates back to inventory page.
@@ -170,7 +176,7 @@ Cart page  tests
 * test_checkout2_cart_with_zero_elements: 
   * Testing if "Checkout" button is disabled in case cart is empty.
 * test_check_alignments_cart_page: 
-  * Testing if alignements are correct.
+  * Testing if alignments are correct.
 
 
 ```sh
@@ -180,9 +186,13 @@ Checkout page  tests
   * Accessing login page
   * Login with different users, then visit inventory page
   * Adding every item to cart
+  * Navigating to Cart page
   * Clicking "Checkout" button
+
+#### Connected tests
 * test_checkout_final: 
-  * Testing if checkout is successful after providing correct data.
+  * Testing if checking out is successfull after providing correct.
+
 
 ```sh
 Checkout Step Two page  tests
@@ -191,8 +201,10 @@ Checkout Step Two page  tests
   * Accessing login page
   * Login with different users, then visit inventory page
   * Adding every item to cart
+  * Navigating to Cart page
   * Clicking "Checkout" button
   * Clicking "Continue" button to navigate to second checkout page
+#### Connected tests
 * test_check_total_price: 
   * Testing if sum of checkout items's prices are equal to final price .
 * test_complete_order: 
