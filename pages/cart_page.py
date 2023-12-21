@@ -1,8 +1,11 @@
 from locators.cart_page_locators import *
+from locators.locator import *
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support.ui import Select
 import time
 from pages.base_page import BasePage
+from utils.common import assume_and_log
+from variables import *
 
 
 class CartPage(BasePage):
@@ -65,3 +68,9 @@ class CartPage(BasePage):
                 return True
 
         return False
+
+    def click_back_to_inventory_page(self):
+        self._find(CommonLocators.BURGER_BUTTON).click()
+        time.sleep(0.5)
+        self._find(CommonLocators.ALL_ITEMS_BUTTON).click()
+        assume_and_log(INVENTORY_URL, self.driver.current_url)

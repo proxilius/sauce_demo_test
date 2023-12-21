@@ -28,6 +28,7 @@
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
+    <li><a href="#tests">Tests</a></li>
   </ol>
 </details>
 
@@ -62,6 +63,8 @@ This is an example of how to list things you need to use the software and how to
   ```sh
   pip install requirements.txt pip install
   ```
+* In case the ChromeDriver is not detected automatically, you can configure it using this page:
+  https://www.browserstack.com/guide/run-selenium-tests-using-selenium-chromedriver
 
 
 
@@ -95,10 +98,23 @@ Navigate into root folder: ../sacuce_demo_test
    pytest -k TestCheckoutStepTwoPage -v -s  > output_final.txt
   ```
 
-## Tests
+If pytest is not recognized, you can try running the tests with:
 ```sh
-  Login page tests
+   python -m pytest 
   ```
+
+
+## Tests
+To run specific testcase, use -k flag with the name of the test. For example:
+```sh
+  pytest -v -s -k test_login_valid > output_final.txt --durations=0 
+  ```
+  This one above runs only the "test_login_valid" testcase
+
+
+```sh
+Login page  tests
+```
 #### Test fixture
   * Accessing login page
 #### Connected tests
@@ -130,6 +146,9 @@ Inventory page  tests
   * Testing if selected item is removed from the cart.
 * test_add_item_from_item_page: 
   * Testing if item is added to the cart (clicking add button from the item page).
+* test_reset_state: 
+  * Testing if cart is empty after resetting the state.
+  
 
 
 ```sh
@@ -174,14 +193,14 @@ Checkout Step Two page  tests
   * Adding every item to cart
   * Clicking "Checkout" button
   * Clicking "Continue" button to navigate to second checkout page
+* test_check_total_price: 
+  * Testing if sum of checkout items's prices are equal to final price .
 * test_complete_order: 
   * Testing if checkout is finished successful after providing correct data.
 * test_cancel_order:
   * Testing if clicking "Cancel" button navigates back to intentory page.
 
 
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
 

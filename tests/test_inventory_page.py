@@ -153,6 +153,18 @@ class TestInventoryPage:
         items = inventoryPage.get_items_all()
         assume_and_log([items[0]], items_after_adding)
 
+    def test_reset_state(self, inventory_page):
+        inventoryPage, username = inventory_page
+        CommonSteps.add_everything_to_cart(self)
+        inventoryPage.click_reset_state()
+        items_in_cart = [
+            item for item in inventoryPage.get_items_all() if item["in_cart"] == True
+        ]
+        quantity = inventoryPage.get_cart_quantity()
+        # after reset, cart should be empty
+        assume_and_log(0, quantity, "Cart is empty")
+        assume_and_log([], items_in_cart, "Items should show Add to cart")
+
 
 if __name__ == "__main__":
     unittest.main()

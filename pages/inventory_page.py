@@ -5,7 +5,7 @@ from selenium.webdriver.support.ui import Select
 import time
 from pages.base_page import BasePage
 from variables import *
-from utils.common import assert_and_log
+from utils.common import assume_and_log
 
 
 class InventoryPage(BasePage):
@@ -129,4 +129,9 @@ class InventoryPage(BasePage):
         self._find(CommonLocators.BURGER_BUTTON).click()
         time.sleep(0.5)
         self._find(CommonLocators.LOGOUT_BUTTON).click()
-        assert self.driver.current_url == BASE_URL
+        assume_and_log(BASE_URL, self.driver.current_url)
+
+    def click_reset_state(self):
+        self._find(CommonLocators.BURGER_BUTTON).click()
+        time.sleep(0.5)
+        self._find(CommonLocators.RESET_STATE_BUTTON).click()

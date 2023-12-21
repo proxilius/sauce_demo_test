@@ -140,6 +140,10 @@ class TestCartPage:
             print("No misalignment.")
             assume_and_log(True, True, "No misalignment")
 
+    def test_back_to_inventory(self, cart_page):
+        cartPage, InventoryPage, items_added_to_cart, current_user = cart_page
+        cartPage.click_back_to_inventory_page()
+
 
 if __name__ == "__main__":
     unittest.main()
