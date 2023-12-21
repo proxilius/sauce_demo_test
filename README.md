@@ -172,7 +172,7 @@ Cart page  tests
 * test_from_item_page_remove_item_from_cart: 
   * Testing if selected item can removed from cart (clicking remove button from the item page).
 * test_checkout_cart: 
-  * Testing id "Checkout" button navigates to checkout page.
+  * Testing if "Checkout" button navigates to checkout page.
 * test_checkout2_cart_with_zero_elements: 
   * Testing if "Checkout" button is disabled in case cart is empty.
 * test_check_alignments_cart_page: 

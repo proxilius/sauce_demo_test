@@ -72,12 +72,11 @@ class TestCheckoutStepTwoPage:
             current_user,
         ) = checkout_step_two_page
         time.sleep(1)
-        data = checkoutPageStepTwo.get_items()
+        items = checkoutPageStepTwo.get_items()
         names1 = [item["name"] for item in items_added_to_cart]
-        names2 = [item["name"] for item in data]
-        print("NAMES:::", names2, names1)
+        names2 = [item["name"] for item in items]
         assume_and_log(names1, names2)
-        final_price = sum(item["price"] for item in data)
+        final_price = sum(item["price"] for item in items)
         price_equal = checkoutPageStepTwo.check_price(final_price)
         assume_and_log(True, price_equal, "Price equals")
 
